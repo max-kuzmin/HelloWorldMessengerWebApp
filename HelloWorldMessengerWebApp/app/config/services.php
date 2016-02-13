@@ -9,9 +9,10 @@ use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
-use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Events\Manager;
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
@@ -95,4 +96,17 @@ $di->setShared('session', function () {
     $session->start();
 
     return $session;
+});
+
+
+$di->setShared('dispatcher', function() {
+
+    //проверка на авторизацию
+    $eventsManager = new Manager();
+    $eventsManager->attach('dispatch:beforeExecuteRoute', new SecurityPlugin);
+
+    $dispatcher = new Dispatcher();
+    $dispatcher->setEventsManager($eventsManager);
+
+    return $dispatcher;
 });
