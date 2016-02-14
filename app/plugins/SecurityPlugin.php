@@ -68,7 +68,7 @@ class SecurityPlugin extends Plugin {
 
         //приватные методы гостя
         $guestResources = array(
-            'account'    => array('register', 'login'),
+            'account'    => array('register', 'login', 'check'),
         );
         foreach ($guestResources as $resource => $actions) {
             $acl->addResource(new Resource($resource), $actions);

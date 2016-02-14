@@ -80,7 +80,7 @@ class UserDialog extends \Phalcon\Mvc\Model
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "login",
+                    "field"  => "login"
                 )
             )
         );
@@ -88,7 +88,7 @@ class UserDialog extends \Phalcon\Mvc\Model
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "dialog_id",
+                    "field"  => "dialog_id"
                 )
             )
         );
@@ -97,7 +97,7 @@ class UserDialog extends \Phalcon\Mvc\Model
         $this->validate(
             new Uniqueness(
                 array(
-                    "field"  => "id",
+                    "field"  => "id"
                 )
             )
         );
@@ -106,7 +106,7 @@ class UserDialog extends \Phalcon\Mvc\Model
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "new",
+                    "field"  => "new"
                 )
             )
         );

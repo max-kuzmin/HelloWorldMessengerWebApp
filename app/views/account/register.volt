@@ -1,16 +1,22 @@
-<div class="page-header">
-    <h1>Congratulations!</h1>
-</div>
+{{ form("account/register") }}
 
-<p>You're now flying with Phalcon. Great things are about to happen!</p>
+<label for="login">Логин:</label>
+{{ text_field("login") }}
 
-<p>This page is located at <code>views/index/index.volt</code></p>
+<label for="pass">Пароль:</label>
+{{ text_field("pass") }}
 
+<label for="pass2">Повторите пароль:</label>
+{{ text_field("pass2") }}
 
-Бла бла бла, главная страница
+<label for="email">E-mail:</label>
+{{ text_field("email") }}
 
-{{ link_to("accounts\login", "Войти") }}
+<label for="name">Ваше имя:</label>
+{{ text_field("name") }}
 
-{{ link_to("accounts\register", "Зарегистрироваться") }}
+{{ submit_button("Зарегистрировать") }}
+
+{{ endForm() }}
 
 {{ flash.output() }}
