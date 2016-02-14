@@ -32,6 +32,18 @@ class User extends \Phalcon\Mvc\Model
     public $info;
 
     /**
+     *
+     * @var string
+     */
+    public $token;
+
+    /**
+     *
+     * @var string
+     */
+    public $email;
+
+    /**
      * Returns table name mapped in the model.
      *
      * @return string
