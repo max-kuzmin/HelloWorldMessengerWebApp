@@ -10,10 +10,11 @@ use Phalcon\Mvc\View;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
-use Phalcon\Flash\Direct as Flash;
+use Phalcon\Flash\Session as Flash;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Manager;
-
+use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
+use Libraries\PHPMailer\PHPMailer;
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
  */
@@ -110,3 +111,24 @@ $di->setShared('dispatcher', function() {
 
     return $dispatcher;
 });
+
+
+
+$di->setShared('mail', function () {
+    $mail = new PHPMailer;
+
+    $mail->isSMTP();
+    $mail->isHTML(true);
+
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 587;
+    $mail->SMTPSecure = 'tls';
+    $mail->SMTPAuth = true;
+    $mail->Username = "kuzmin@gapps.ispu.ru";
+    $mail->Password = "Max89109981293";
+
+    //$mail->SMTPDebug = 1;
+    //$mail->Debugoutput = 'html';
+    return $mail;
+    }
+);

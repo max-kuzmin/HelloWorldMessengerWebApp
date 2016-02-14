@@ -58,12 +58,19 @@ class SecurityPlugin extends Plugin {
         $acl->addRole(new Role('Guests'));
 
 
-        //приватные методы
-        $privateResources = array(
-            'companies'    => array('index', 'search', 'new'),
+        //приватные методы пользователя
+        $userResources = array(
+            'account'    => array('logout'),
         );
+        foreach ($userResources as $resource => $actions) {
+            $acl->addResource(new Resource($resource), $actions);
+        }
 
-        foreach ($privateResources as $resource => $actions) {
+        //приватные методы гостя
+        $guestResources = array(
+            'account'    => array('register', 'login'),
+        );
+        foreach ($guestResources as $resource => $actions) {
             $acl->addResource(new Resource($resource), $actions);
         }
 
@@ -85,9 +92,15 @@ class SecurityPlugin extends Plugin {
             }
         }
 
-        foreach ($privateResources as $resource => $actions) {
+        foreach ($userResources as $resource => $actions) {
             foreach ($actions as $action) {
                 $acl->allow('Users', $resource, $action);
+            }
+        }
+
+        foreach ($guestResources as $resource => $actions) {
+            foreach ($actions as $action) {
+                $acl->allow('Guests', $resource, $action);
             }
         }
 

@@ -7,8 +7,10 @@
 <p>This page is located at <code>views/index/index.volt</code></p>
 
 
-{{ link_to("account\login", "Войти") }}
+Бла бла бла, главная страница
 
-{{ link_to("account\register", "Зарегистрироваться") }}
+{{ link_to("accounts\login", "Войти") }}
+
+{{ link_to("accounts\register", "Зарегистрироваться") }}
 
 {{ flash.output() }}
