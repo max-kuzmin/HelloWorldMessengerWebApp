@@ -2,7 +2,6 @@
 
 use Phalcon\Http\Request;
 
-
 class AccountController extends ControllerBase
 {
 
@@ -24,7 +23,7 @@ class AccountController extends ControllerBase
                 )
             );
 
-            if ($user) {
+            if ($user && $user->token == "") {
 
                 $this->session->set(
                     'auth',
@@ -49,9 +48,52 @@ class AccountController extends ControllerBase
     public function registerAction()
     {
 
-        $this->SendEmailWithToken("max@pochtamt.ru", "lolka");
-    }
+        if ($this->request->isPost()) {
 
+            $user = User::findFirst(
+                array(
+                    "login = :login:",
+                    'bind' => array(
+                        'login' => $this->request->getPost("login")
+                    )
+                )
+            );
+
+            if ($user) {
+                $this->flash->error("Пользователь с таким логином уже существует");
+                return;
+            }
+
+            if ($this->request->getPost("pass") != $this->request->getPost("pass2")) {
+                $this->flash->error("Пароли не совпадают");
+                return;
+            }
+
+            $user = new User();
+            $user->login = $this->request->getPost("login");
+            $user->pass = md5($this->request->getPost("pass"));
+            $user->name = $this->request->getPost("name");
+            $user->email = $this->request->getPost("email");
+            $user->token = md5(rand().rand().rand());
+
+            if ($user->save()) {
+
+                if ($this->SendEmailWithToken($user->email, $user->token)) {
+
+                    $this->flash->success("Регистрация завершена. Письмо с подтверждением отправлено на указанный e-mail");
+                    return $this->response->redirect("index");
+                }
+
+            }
+
+            foreach ($user->getMessages() as $message) {
+                $this->flash->error($message->getMessage());
+            }
+        }
+
+        //$this->flash->error("Ошибка регистрации");
+
+    }
 
     public function logoutAction()
     {
@@ -60,7 +102,6 @@ class AccountController extends ControllerBase
 
         return $this->response->redirect("index");
     }
-
 
     public function checkAction()
     {
@@ -82,24 +123,37 @@ class AccountController extends ControllerBase
 
                 $user->token = "";
 
+
                 if ($user->save()) {
+
+                    $this->session->set(
+                        'auth',
+                        array(
+                            'login' => $user->login,
+                            'name' => $user->name
+                        )
+                    );
+
                     $this->flash->success("Учетная запись успешно подтверждена");
                     return $this->response->redirect("index");
+                }
+
+                foreach ($user->getMessages() as $message) {
+                    $this->flash->error($message->getMessage());
                 }
             }
 
         }
 
-        $this->flash->success("Ошибка потверждения учетной записи");
+        $this->flash->error("Ошибка потверждения учетной записи");
 
         return $this->response->redirect("index");
     }
 
-
     protected function SendEmailWithToken($email, $token)
     {
 
-        $this->mail->setFrom('no-reply@gapps.ispu.ru', 'HelloWorld Messenger Support');
+        $this->mail->setFrom('kuzmin@gapps.ispu.ru', 'HelloWorld Messenger Support');
 
         $this->mail->addAddress($email);
 
@@ -110,9 +164,13 @@ class AccountController extends ControllerBase
             .($this->tag->linkTo("account/check?token=".$token, "link"));
 
 
-        if (!($this->mail->send())) {
+        $success = $this->mail->send();
+
+        if (!$success) {
             $this->flash->error($this->mail->ErrorInfo);
         }
+
+        return $success;
 
     }
 }

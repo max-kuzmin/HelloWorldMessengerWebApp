@@ -3,6 +3,7 @@
 use Phalcon\Mvc\Model\Validator\PresenceOf;
 use Phalcon\Mvc\Model\Validator\Uniqueness;
 use Phalcon\Mvc\Model\Validator\StringLength;
+use Phalcon\Mvc\Model\Validator\Email;
 
 class User extends \Phalcon\Mvc\Model
 {
@@ -25,23 +26,18 @@ class User extends \Phalcon\Mvc\Model
      */
     public $name;
 
-    /**
-     *
-     * @var string
-     */
-    public $info;
-
-    /**
-     *
-     * @var string
-     */
-    public $token;
 
     /**
      *
      * @var string
      */
     public $email;
+
+    /**
+     *
+     * @var string
+     */
+    public $token;
 
     /**
      * Returns table name mapped in the model.
@@ -89,7 +85,7 @@ class User extends \Phalcon\Mvc\Model
         $this->validate(
             new Uniqueness(
                 array(
-                    "field"  => "login",
+                    "field"  => "login"
                 )
             )
         );
@@ -103,14 +99,15 @@ class User extends \Phalcon\Mvc\Model
 
         $this->validate(new StringLength(array(
             "field" => 'pass',
-            'max' => 20,
-            'min' => 5
+            'max' => 32,
+            'min' => 32
         )));
 
+
         $this->validate(
-            new PresenceOf(
+            new Email(
                 array(
-                    "field"  => "info",
+                    "field"  => "email",
                 )
             )
         );
@@ -123,10 +120,5 @@ class User extends \Phalcon\Mvc\Model
         return $this->validationHasFailed() != true;
     }
 
-
-    public function beforeSave()
-    {
-        $this->pass = md5($this->pass);
-    }
 
 }

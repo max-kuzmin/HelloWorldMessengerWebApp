@@ -85,7 +85,7 @@ class Message extends \Phalcon\Mvc\Model
         $this->validate(
             new Uniqueness(
                 array(
-                    "field"  => "message_id",
+                    "field"  => "message_id"
                 )
             )
         );
@@ -94,7 +94,7 @@ class Message extends \Phalcon\Mvc\Model
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "login",
+                    "field"  => "login"
                 )
             )
         );
@@ -102,7 +102,7 @@ class Message extends \Phalcon\Mvc\Model
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "dialog_id",
+                    "field"  => "dialog_id"
                 )
             )
         );
@@ -110,7 +110,7 @@ class Message extends \Phalcon\Mvc\Model
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "time",
+                    "field"  => "time"
                 )
             )
         );
