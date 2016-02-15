@@ -4,7 +4,7 @@
 {{ text_field("login") }}
 
 <label for="pass">Пароль:</label>
-{{ text_field("pass", "placeholder": "Пароль") }}
+{{ password_field("pass", "placeholder": "Пароль") }}
 
 {{ submit_button("Войти") }}
 
