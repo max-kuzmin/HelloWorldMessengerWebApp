@@ -6,9 +6,15 @@
 
 <p>This page is located at <code>views/index/index.volt</code></p>
 
+{% if login %}
+
+{{ link_to("userinfo\showinfo?login=" ~ login, "Моя инфа") }}
+
+{% else %}
 
 {{ link_to("account\login", "Войти") }}
-
 {{ link_to("account\register", "Зарегистрироваться") }}
+
+{% endif %}
 
 {{ flash.output() }}

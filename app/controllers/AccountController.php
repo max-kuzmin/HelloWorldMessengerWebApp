@@ -71,6 +71,10 @@ class AccountController extends ControllerBase
 
             $user = new User();
             $user->login = $this->request->getPost("login");
+
+            $user->gender = ($this->request->getPost("gender") == "жен")? true : false;
+            $user->country = $this->request->getPost("country");
+
             $user->pass = md5($this->request->getPost("pass"));
             $user->name = $this->request->getPost("name");
             $user->email = $this->request->getPost("email");

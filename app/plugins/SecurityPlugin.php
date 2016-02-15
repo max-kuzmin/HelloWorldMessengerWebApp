@@ -61,6 +61,7 @@ class SecurityPlugin extends Plugin {
         //приватные методы пользователя
         $userResources = array(
             'account'    => array('logout'),
+            'userinfo'    => array('showinfo', 'getavatar')
         );
         foreach ($userResources as $resource => $actions) {
             $acl->addResource(new Resource($resource), $actions);

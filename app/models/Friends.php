@@ -1,55 +1,41 @@
 <?php
 
 use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
 use Phalcon\Mvc\Model\Validator\StringLength;
-use Phalcon\Mvc\Model\Validator\Email;
 
-class User extends \Phalcon\Mvc\Model
+class Friends extends \Phalcon\Mvc\Model
 {
 
     /**
      *
      * @var string
      */
-    public $login;
+    public $login1;
 
     /**
      *
      * @var string
      */
-    public $pass;
+    public $login2;
 
     /**
      *
-     * @var string
+     * @var int
      */
-    public $name;
-
-
-    /**
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     *
-     * @var string
-     */
-    public $token;
+    public $id;
 
     /**
      *
      * @var bool
      */
-    public $gender;
+    public $confirm1;
 
     /**
      *
-     * @var string
+     * @var bool
      */
-    public $country;
+    public $confirm2;
+
 
     /**
      * Returns table name mapped in the model.
@@ -58,7 +44,7 @@ class User extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'user';
+        return 'friends';
     }
 
     /**
@@ -85,60 +71,39 @@ class User extends \Phalcon\Mvc\Model
 
     public function initialize()
     {
-        $this->hasMany("login", "Message", "login");
-        $this->hasMany("login", "Image", "login");
-        $this->hasMany("login", "UserDialog", "login");
+        $this->hasMany("login1", "User", "login");
+        $this->hasMany("login2", "User", "login");
     }
 
 
 
     public function validation()
     {
-        $this->validate(
-            new Uniqueness(
-                array(
-                    "field"  => "login"
-                )
-            )
-        );
-
 
         $this->validate(new StringLength(array(
-            "field" => 'login',
+            "field" => 'login1',
             'max' => 20,
             'min' => 3
         )));
 
         $this->validate(new StringLength(array(
-            "field" => 'pass',
-            'max' => 32,
-            'min' => 32
-        )));
-
-
-        $this->validate(
-            new Email(
-                array(
-                    "field"  => "email",
-                )
-            )
-        );
-
-        $this->validate(new StringLength(array(
-            "field" => 'name',
+            "field" => 'login2',
+            'max' => 20,
             'min' => 3
         )));
 
-        $this->validate(new StringLength(array(
-            "field" => 'country',
-            'max' => 3,
-            'min' => 50
-        )));
+        $this->validate(
+        new PresenceOf(
+            array(
+                "field"  => "confirm1",
+            )
+        )
+    );
 
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "gender",
+                    "field"  => "confirm2",
                 )
             )
         );
