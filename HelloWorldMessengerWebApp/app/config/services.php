@@ -132,3 +132,12 @@ $di->setShared('mail', function () {
     return $mail;
     }
 );
+
+
+$di->setShared('countries', function () {
+    return ["Россия", "Украина"];
+});
+
+$di->setShared('genders', function () {
+    return ["Муж", "Жен"];
+});

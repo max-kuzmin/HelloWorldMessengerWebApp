@@ -14,6 +14,7 @@
 
 {{ link_to("account\login", "Войти") }}
 {{ link_to("account\register", "Зарегистрироваться") }}
+{{ link_to("account\forgotpass", "Восстановить") }}
 
 {% endif %}
 

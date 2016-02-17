@@ -23,20 +23,27 @@ class AccountController extends ControllerBase
                 )
             );
 
-            if ($user && $user->token == "") {
+            if ($user) {
 
-                $this->session->set(
-                    'auth',
-                    array(
-                        'login' => $user->login,
-                        'name' => $user->name
-                    )
-                );
+                if ($user->token == "") {
+                    $this->session->set(
+                        'auth',
+                        array(
+                            'login' => $user->login,
+                            'name' => $user->name
+                        )
+                    );
 
-                $this->flash->success('Привет, ' . $user->name);
+                    $this->flash->success('Привет, ' . $user->name);
 
-                return $this->response->redirect("index");
+                    return $this->response->redirect("index");
+                }
+                else {
+                    $this->flash->error('Сначала необходимо подтвердить вашу учетную запись');
+                    return $this->response->redirect("index");
+                }
             }
+
 
 
             $this->flash->error('Неверный логин или пароль');
@@ -64,6 +71,11 @@ class AccountController extends ControllerBase
                 return;
             }
 
+            if (strlen($this->request->getPost("pass"))<5) {
+                $this->flash->error("Пароль слишком короткий");
+                return;
+            }
+
             if ($this->request->getPost("pass") != $this->request->getPost("pass2")) {
                 $this->flash->error("Пароли не совпадают");
                 return;
@@ -72,7 +84,7 @@ class AccountController extends ControllerBase
             $user = new User();
             $user->login = $this->request->getPost("login");
 
-            $user->gender = ($this->request->getPost("gender") == "жен")? true : false;
+            $user->gender = ($this->request->getPost("gender") == 1)? true : false;
             $user->country = $this->request->getPost("country");
 
             $user->pass = md5($this->request->getPost("pass"));
@@ -82,7 +94,7 @@ class AccountController extends ControllerBase
 
             if ($user->save()) {
 
-                if ($this->SendEmailWithToken($user->email, $user->token)) {
+                if ($this->SendEmailWithToken($user->email, $user->token, "For completing registration go to ")) {
 
                     $this->flash->success("Регистрация завершена. Письмо с подтверждением отправлено на указанный e-mail");
                     return $this->response->redirect("index");
@@ -154,28 +166,46 @@ class AccountController extends ControllerBase
         return $this->response->redirect("index");
     }
 
-    protected function SendEmailWithToken($email, $token)
+
+
+    public function forgotPassAction()
     {
 
-        $this->mail->setFrom('kuzmin@gapps.ispu.ru', 'HelloWorld Messenger Support');
 
-        $this->mail->addAddress($email);
+        if ($this->request->isPost()) {
 
-        $this->mail->Subject = 'Registration in HelloWorld Messenger';
+            $user = User::findFirst(
+                array(
+                    "email = :email: AND login = :login:",
+                    'bind' => array(
+                        'email' => $this->request->getPost("email"),
+                        'login' => $this->request->getPost("login")
+                    )
+                )
+            );
 
-        $this->mail->Body =
-            "For completing registration go to "
-            .($this->tag->linkTo("account/check?token=".$token, "link"));
+            if ($user) {
+
+                $user->token = md5(rand() . rand() . rand());
+
+                if ($user->save()) {
+
+                    if ($this->SendEmailWithToken($user->email, $user->token, "For restoring account go to ")) {
+
+                        $this->flash->success("Письмо с ключем для входа отправлено на указанный e-mail");
+                        return $this->response->redirect("index");
+                    }
+
+                }
+
+            }
 
 
-        $success = $this->mail->send();
-
-        if (!$success) {
-            $this->flash->error($this->mail->ErrorInfo);
+            $this->flash->error("Учетная запись не найдена");
         }
 
-        return $success;
-
     }
+
+
 }
 
