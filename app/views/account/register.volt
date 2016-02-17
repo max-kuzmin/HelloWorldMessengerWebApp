@@ -16,10 +16,10 @@
 {{ text_field("name") }}
 
 <label for="gender">Ваш пол:</label>
-{{ select_static("gender", ["муж", "жен"]) }}
+{{ select_static("gender", this.genders) }}
 
 <label for="country">Страна:</label>
-{{ select_static("country", ["Россия", "Украина"]) }}
+{{ select_static("country", this.countries) }}
 
 {{ submit_button("Зарегистрировать") }}
 

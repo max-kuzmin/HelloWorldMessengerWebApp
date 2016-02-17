@@ -8,6 +8,9 @@ class IndexController extends ControllerBase
         if ($this->session->get("auth")) {
             $this->view->login = $this->session->get("auth")["login"];
         }
+        else {
+            $this->view->login = false;
+        }
     }
 
 }

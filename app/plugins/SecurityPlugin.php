@@ -61,7 +61,7 @@ class SecurityPlugin extends Plugin {
         //приватные методы пользователя
         $userResources = array(
             'account'    => array('logout'),
-            'userinfo'    => array('showinfo', 'getavatar')
+            'userinfo'    => array('showinfo', 'getavatar', 'editinfo')
         );
         foreach ($userResources as $resource => $actions) {
             $acl->addResource(new Resource($resource), $actions);
@@ -69,7 +69,7 @@ class SecurityPlugin extends Plugin {
 
         //приватные методы гостя
         $guestResources = array(
-            'account'    => array('register', 'login', 'check'),
+            'account'    => array('register', 'login', 'forgotpass'),
         );
         foreach ($guestResources as $resource => $actions) {
             $acl->addResource(new Resource($resource), $actions);
@@ -78,7 +78,7 @@ class SecurityPlugin extends Plugin {
         //открытые методы
         $publicResources = array(
             'index'    => array('index'),
-            'about'    => array('index')
+            'account'    => array('check')
         );
         foreach ($publicResources as $resource => $actions) {
             $acl->addResource(new Resource($resource), $actions);

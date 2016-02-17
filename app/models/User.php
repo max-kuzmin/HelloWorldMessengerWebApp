@@ -129,11 +129,13 @@ class User extends \Phalcon\Mvc\Model
             'min' => 3
         )));
 
-        $this->validate(new StringLength(array(
-            "field" => 'country',
-            'max' => 3,
-            'min' => 50
-        )));
+        $this->validate(
+            new PresenceOf(
+                array(
+                    "field"  => "country",
+                )
+            )
+        );
 
         $this->validate(
             new PresenceOf(
