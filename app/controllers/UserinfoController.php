@@ -2,7 +2,7 @@
 
 use Phalcon\Http\Response;
 
-class UserInfoController extends ControllerBase
+class UserinfoController extends ControllerBase
 {
 
     public function showinfoAction()
@@ -25,7 +25,7 @@ class UserInfoController extends ControllerBase
 
 
                 if ($user->login == $this->session->get("auth")["login"]) {
-                    return $this->view->pick("userinfo/showmyinfo");
+                    return $this->view->pick("Userinfo/showmyinfo");
                 }
             } else {
                 $this->flash->error("Пользователь не найден");
@@ -54,7 +54,7 @@ class UserInfoController extends ControllerBase
             //устанавливаем возвращаемое представление
             $user->gender = ($user->gender) ? 1 : 0;
             $this->view->user = $user;
-            $this->view->pick("userinfo/editmyinfo");
+            $this->view->pick("Userinfo/editmyinfo");
 
             //если мы изменили данные через пост запрос
             if ($this->request->isPost()) {
