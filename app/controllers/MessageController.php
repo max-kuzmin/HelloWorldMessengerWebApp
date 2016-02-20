@@ -36,6 +36,7 @@ class MessageController extends ControllerBase
 
 
                     $this->view->messages = count($messages) > 0 ? $messages : array();
+                    $this->view->dialogid = $dialog->dialog_id;
 
                     //отмечаем диалог как прочитанный
                     $userdialog->new = false;
@@ -84,6 +85,7 @@ class MessageController extends ControllerBase
                         $message->text = $txt;
 
 
+
                         if ($message->save()) {
 
                             $dialog->time = $message->time;
@@ -104,6 +106,20 @@ class MessageController extends ControllerBase
                                 $userdialog->save();
                             }
 
+                            //сохранение картинки
+                            $file = $this->request->getUploadedFiles()[0];
+                            if ($file && $file->getSize()>0 && $file->getSize()<1024*1024) {
+
+                                $img = new Image();
+                                $img->message_id = $message->message_id;
+
+
+                                $img->img = file_get_contents($file->getTempName());
+
+                                if (!$img->save()) {
+                                    $this->flash->error("Ошибка сохранения картинки");
+                                }
+                            }
 
                             $res = new Response();
                             $res->setJsonContent(array("status" => 'OK'));
@@ -112,7 +128,7 @@ class MessageController extends ControllerBase
                         }
 
                         $res = new Response();
-                        $res->setJsonContent(array("status" => 'ERROR'));
+                        $res->setJsonContent(array("status" => 'error'));
 
                         return $res;
                     }
@@ -125,6 +141,49 @@ class MessageController extends ControllerBase
             return $this->response->redirect("index");
 
         }
+    }
+
+
+    public function showimageAction()
+    {
+        if ($this->request->isGet()) {
+
+            $message = Message::findFirst(
+                array(
+                    "message_id = :messageid:",
+                    'bind' => array(
+                        'messageid' => $this->request->get("messageid")
+                    )
+                )
+            );
+
+            if ($message) {
+                $userdialog = $message->getDialog()->getUserdialog(
+                    array(
+                        "login = :login:",
+                        'bind' => array(
+                            'login' => $this->session->get('auth')['login']
+                        )
+                    )
+                )->getFirst();
+
+                if ($userdialog) {
+                    $img = $message->getImage()->getFirst();
+
+                    if ($img) {
+                        $res = new Response();
+                        $res->setHeader("Content-Type", "image/jpeg");
+                        $res->setContent($img->img);
+                        return $res;
+                    }
+                }
+            }
+
+
+            return $this->response->setJsonContent(array("status" => "error"));
+
+        }
+
     }
 
 }

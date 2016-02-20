@@ -9,6 +9,7 @@
 {{ link_to("dialog\showdialogs", "Диалоги") }}
 {{ link_to("account\logout", "Выход") }}
 {{ link_to("search\searchusers", "Поиск") }}
+{{ link_to("friends\showfriends", "Друзья") }}
 
 {% else %}
 

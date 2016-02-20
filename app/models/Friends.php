@@ -71,8 +71,8 @@ class Friends extends \Phalcon\Mvc\Model
 
     public function initialize()
     {
-        $this->hasMany("login1", "User", "login");
-        $this->hasMany("login2", "User", "login");
+        $this->belongsTo("login1", "User", "login", array('alias' => 'User1', "foreignKey" => true));
+        $this->belongsTo("login2", "User", "login", array('alias' => 'User2', "foreignKey" => true));
     }
 
 

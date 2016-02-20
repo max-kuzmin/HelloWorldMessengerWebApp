@@ -62,9 +62,10 @@ class SecurityPlugin extends Plugin {
         $userResources = array(
             'account'    => array('logout'),
             'userinfo'    => array('showinfo', 'getavatar', 'editinfo'),
-            'dialog'   => array('showdialogs'),
-            'message' => array('showmessages', 'addmessage'),
-            'search' => array('searchusers')
+            'dialog'   => array('showdialogs', 'createdialog', 'addusertodialog', 'removedialog', 'renamedialog'),
+            'message' => array('showmessages', 'addmessage', 'showimage'),
+            'search' => array('searchusers'),
+            'friends' => array('addfriend', 'showfriends', 'removefriend')
         );
         foreach ($userResources as $resource => $actions) {
             $acl->addResource(new Resource($resource), $actions);

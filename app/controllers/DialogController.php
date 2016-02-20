@@ -21,12 +21,213 @@ class DialogController extends ControllerBase
             $dialogs = Array();
 
             foreach ($userdialogs as $userdialog) {
-                $dialogs[]=$userdialog->getDialog();
+                $dialog = $userdialog->getDialog();
+
+                $users = array();
+                $otherUserdialogs = $dialog->getUserdialog(
+                    array(
+                        "login != :login:",
+                        'bind' => array(
+                            'login' => $this->session->get("auth")["login"]
+                        )
+                    )
+                );
+
+                foreach ($otherUserdialogs as $otherUserdialog){
+                    $users[] = $otherUserdialog->getUser();
+                }
+
+                $dialogs[]=array(
+                    $dialog,
+                    $users
+                );
             }
 
                 $this->view->dialogs=$dialogs;
 
         }
+    }
+
+
+    public function createdialogAction()
+    {
+        $user = User::findFirst(
+            array(
+                "login = :login:",
+                'bind' => array(
+                    'login'    => $this->request->get('login')
+                )
+            )
+        );
+
+        if ($user) {
+
+
+            $friends = Friends::findFirst(array(
+                "(login1 = :mylogin: AND login2 = :login:) OR (login2 = :mylogin: AND login1 = :login:)",
+                'bind' => array(
+                    'mylogin' => $this->session->get('auth')["login"],
+                    'login' => $user->login
+                )
+            ));
+
+
+            if (!($friends && $friends->confirm1 && $friends->confirm2)) {
+                $this->flash->error("Вы должны быть друзьями, чтобы создать диалог");
+                return $this->response->redirect($this->request->getHTTPReferer());
+            }
+
+
+            $dialog = new Dialog();
+            $dialog->time = time();
+            $dialog->name = $this->session->get('auth')['login']." - ".$user->login;
+
+            if ($dialog->save()) {
+
+                $userdialog = new UserDialog();
+                $userdialog->dialog_id = $dialog->dialog_id;
+                $userdialog->new = true;
+                $userdialog->login = $user->login;
+
+                $userdialog2 = new UserDialog();
+                $userdialog2->dialog_id = $dialog->dialog_id;
+                $userdialog2->new = false;
+                $userdialog2->login = $this->session->get('auth')['login'];
+
+                if ($userdialog->save() && $userdialog2->save()) {
+                    $this->flash->success("Диалог создан");
+                    return $this->response->redirect("message/showmessages?dialogid=" . $dialog->dialog_id);
+                }
+            }
+        }
+
+        $this->flash->error("Ошибка создания диалога");
+        return $this->response->redirect("index");
+    }
+
+    public function addusertodialogAction()
+    {
+        $user = User::findFirst(
+            array(
+                "login = :login:",
+                'bind' => array(
+                    'login'    => $this->request->get('login')
+                )
+            )
+        );
+
+        if ($user) {
+
+            //проверка, я вляется ли пользователь другом
+            $friends = Friends::findFirst(array(
+                "(login1 = :mylogin: AND login2 = :login:) OR (login2 = :mylogin: AND login1 = :login:)",
+                'bind' => array(
+                    'mylogin' => $this->session->get('auth')["login"],
+                    'login' => $user->login
+                )
+            ));
+
+            if (!($friends && $friends->confirm1 && $friends->confirm2)) {
+                $this->flash->error("Вы должны быть друзьями, чтобы создать диалог");
+                return $this->response->redirect($this->request->getHTTPReferer());
+            }
+
+
+            $myuserdialog = UserDialog::findFirst(
+                array(
+                    "dialog_id = :dialogid: AND login = :login:",
+                    'bind' => array(
+                        'dialogid'    => $this->request->get('dialogid'),
+                        'login' => $this->session->get('auth')["login"]
+                    )
+                )
+            );
+
+            if ($myuserdialog) {
+
+                $userdialog = UserDialog::findFirst(
+                    array(
+                        "dialog_id = :dialogid: AND login = :login:",
+                        'bind' => array(
+                            'dialogid'    => $this->request->get('dialogid'),
+                            'login' => $user->login
+                        )
+                    )
+                );
+
+                if ($userdialog) {
+                    $this->flash->error("Пользователь уже добавлен в диалог");
+                    return $this->response->redirect($this->request->getHTTPReferer());
+                }
+
+                $userdialog = new UserDialog();
+                $userdialog->new = true;
+                $userdialog->dialog_id = $myuserdialog->dialog_id;
+                $userdialog->login = $user->login;
+
+                if ($userdialog->save()) {
+                    $this->flash->success("Пользователь добавлен в диалог");
+                    return $this->response->redirect($this->request->getHTTPReferer());
+                }
+            }
+        }
+
+        $this->flash->error("Ошибка добавления пользователя в диалог");
+        return $this->response->redirect("index");
+    }
+
+
+
+    public function removedialogAction()
+    {
+
+        $myuserdialog = UserDialog::findFirst(
+            array(
+                "dialog_id = :dialogid: AND login = :login:",
+                'bind' => array(
+                    'dialogid' => $this->request->get('dialogid'),
+                    'login' => $this->session->get('auth')["login"]
+                )
+            )
+        );
+
+        if ($myuserdialog) {
+            if ($myuserdialog->delete()) {
+                $this->flash->success("Диалог удален");
+                return $this->response->redirect('dialog/showdialogs');
+            }
+        }
+
+        $this->flash->error("Ошибка удаления диалога");
+        return $this->response->redirect('dialog/showdialogs');
+    }
+
+
+
+    public function renamedialogAction()
+    {
+
+        $myuserdialog = UserDialog::findFirst(
+            array(
+                "dialog_id = :dialogid: AND login = :login:",
+                'bind' => array(
+                    'dialogid' => $this->request->get('dialogid'),
+                    'login' => $this->session->get('auth')["login"]
+                )
+            )
+        );
+
+        if ($myuserdialog && strlen($this->request->get('name'))>1) {
+            $dialog = $myuserdialog->getDialog();
+            $dialog->name = $this->request->get('name');
+            if ($dialog->save()) {
+                $this->flash->success("Диалог переименован");
+                return $this->response->redirect('dialog/showdialogs');
+            }
+        }
+
+        $this->flash->error("Ошибка переименования диалога");
+        return $this->response->redirect($this->request->getHTTPReferer());
     }
 
 }

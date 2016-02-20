@@ -1,5 +1,5 @@
-{{ form("search/searchusers") }}
-{{ text_field("query") }}
+{{ form("search/searchusers", 'method': 'get') }}
+{{ text_field("query", "value": query) }}
 {{ submit_button("Поиск") }}
 {{ endForm() }}
 
