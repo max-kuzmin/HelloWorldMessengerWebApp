@@ -7,32 +7,28 @@ class SearchController extends ControllerBase
 
     public function searchusersAction()
     {
-        if ($this->request->isPost()) {
 
-            if (strlen($this->request->getPost("query"))<1 || strlen($this->request->getPost("query"))>50){
-                $this->flash->error("Неверная длина запроса");
-                $this->view->users = null;
-                return;
-            }
+        if (strlen($this->request->get("query")) >= 1 && strlen($this->request->get("query")) <= 50) {
 
             $users = User::find(
                 array(
                     "(login LIKE :login: OR name LIKE :name: OR email LIKE :email:) AND login != :myLogin:",
                     'bind' => array(
-                        'login'    => "%".$this->request->getPost("query")."%",
-                        'name' => "%".$this->request->getPost("query")."%",
-                        'email' => "%".$this->request->getPost("query")."%",
+                        'login' => "%" . $this->request->get("query") . "%",
+                        'name' => "%" . $this->request->get("query") . "%",
+                        'email' => "%" . $this->request->get("query") . "%",
                         'myLogin' => $this->session->get('auth')['login']
                     )
                 )
             );
 
             $this->view->users = $users;
+            $this->view->query = $this->request->get('query');
         }
         else {
             $this->view->users = null;
+            $this->view->query = '';
         }
     }
-
 }
 

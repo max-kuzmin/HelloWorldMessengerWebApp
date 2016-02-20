@@ -23,10 +23,47 @@ class UserinfoController extends ControllerBase
                 $user->gender = ($user->gender) ? 1 : 0;
                 $this->view->user = $user;
 
-
                 if ($user->login == $this->session->get("auth")["login"]) {
                     return $this->view->pick("userinfo/showmyinfo");
                 }
+                else {
+
+                    $friends = Friends::findFirst(array(
+                        "(login1 = :mylogin: AND login2 = :login:) OR (login2 = :mylogin: AND login1 = :login:)",
+                        'bind' => array(
+                            'mylogin' => $this->session->get('auth')["login"],
+                            'login' => $user->login
+                        )
+                    ));
+
+
+                    if ($friends &&
+                        (($friends->login1 == $this->session->get('auth')["login"] && $friends->confirm1)
+                            || ($friends->login2 == $this->session->get('auth')["login"] && $friends->confirm2))
+                    ) {
+                        $this->view->halffriend = true;
+                    }
+                    else {
+                        $this->view->halffriend = false;
+                    }
+
+                    if ($friends &&
+                        $friends->confirm1 &&
+                        $friends->confirm2
+                    ) {
+                        $this->view->fullfriend = true;
+                    }
+                    else {
+                        $this->view->fullfriend = false;
+                    }
+
+
+
+
+                }
+
+
+
             } else {
                 $this->flash->error("Пользователь не найден");
                 return $this->response->redirect("index");

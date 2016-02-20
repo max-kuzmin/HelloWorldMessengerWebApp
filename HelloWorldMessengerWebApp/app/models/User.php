@@ -88,6 +88,9 @@ class User extends \Phalcon\Mvc\Model
         $this->hasMany("login", "Message", "login");
         $this->hasMany("login", "Image", "login");
         $this->hasMany("login", "UserDialog", "login");
+
+        $this->hasMany("login", "Friends", "login1", array('alias' => 'Friends1'));
+        $this->hasMany("login", "Friends", "login2", array('alias' => 'Friends2'));
     }
 
 
