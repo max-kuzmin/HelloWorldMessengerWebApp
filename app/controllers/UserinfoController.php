@@ -25,7 +25,7 @@ class UserinfoController extends ControllerBase
 
 
                 if ($user->login == $this->session->get("auth")["login"]) {
-                    return $this->view->pick("Userinfo/showmyinfo");
+                    return $this->view->pick("userinfo/showmyinfo");
                 }
             } else {
                 $this->flash->error("Пользователь не найден");
@@ -54,7 +54,7 @@ class UserinfoController extends ControllerBase
             //устанавливаем возвращаемое представление
             $user->gender = ($user->gender) ? 1 : 0;
             $this->view->user = $user;
-            $this->view->pick("Userinfo/editmyinfo");
+            $this->view->pick("userinfo/editmyinfo");
 
             //если мы изменили данные через пост запрос
             if ($this->request->isPost()) {
