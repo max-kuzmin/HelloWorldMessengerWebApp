@@ -45,7 +45,7 @@ class MessageController extends ControllerBase
                     return;
                 }
             }
-                $this->flash->error("Диалог не найден");
+                $this->flash->error($this->t->_("dialogNotFound"));
                 return $this->response->redirect("index");
 
         }
@@ -117,7 +117,7 @@ class MessageController extends ControllerBase
                                 $img->img = file_get_contents($file->getTempName());
 
                                 if (!$img->save()) {
-                                    $this->flash->error("Ошибка сохранения картинки");
+                                    $this->flash->error($this->t->_("errorSavingImg"));
                                 }
                             }
 
@@ -137,7 +137,7 @@ class MessageController extends ControllerBase
             }
 
 
-            $this->flash->error("Диалог не найден");
+            $this->flash->error($this->t->_("dialogNotFound"));
             return $this->response->redirect("index");
 
         }

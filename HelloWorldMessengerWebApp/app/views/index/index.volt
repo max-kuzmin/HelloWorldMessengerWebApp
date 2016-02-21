@@ -2,7 +2,6 @@
     <h1>Congratulations!</h1>
 </div>
 
-
 {% if login %}
 
 {{ link_to("userinfo\showinfo?login=" ~ login, "Моя инфа") }}

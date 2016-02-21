@@ -65,7 +65,7 @@ class UserinfoController extends ControllerBase
 
 
             } else {
-                $this->flash->error("Пользователь не найден");
+                $this->flash->error($this->t->_("userNotFound"));
                 return $this->response->redirect("index");
             }
 
@@ -97,12 +97,12 @@ class UserinfoController extends ControllerBase
             if ($this->request->isPost()) {
 
                 if (strlen($this->request->getPost("pass")) < 5) {
-                    $this->flash->error("Пароль слишком короткий");
+                    $this->flash->error($this->t->_("shortPass"));
                     return;
                 }
 
                 if ($this->request->getPost("pass") != $this->request->getPost("pass2")) {
-                    $this->flash->error("Пароли не совпадают");
+                    $this->flash->error($this->t->_("wrong2Pass"));
                     return;
                 }
 
@@ -130,7 +130,7 @@ class UserinfoController extends ControllerBase
                     $img->img = file_get_contents($avatar->getTempName());
 
                     if (!$img->save()) {
-                        $this->flash->error("Ошибка сохранения аватара");
+                        $this->flash->error($this->t->_("errorSavingAvatar"));
 
                     }
                 }
@@ -146,11 +146,11 @@ class UserinfoController extends ControllerBase
                 if ($user->save()) {
 
                     if ($emailChanged) {
-                        if ($this->SendEmailWithToken($user->email, $user->token, "For changing email go to")) {
-                            $this->flash->success("Данные изменены. Письмо с подтверждением отправлено на указанный e-mail");
+                        if ($this->SendEmailWithToken($user->email, $user->token, $this->t->_("changeEmail"))) {
+                            $this->flash->success($this->t->_("changeEmailInfo"));
                         }
                     } else {
-                        $this->flash->success("Данные изменены");
+                        $this->flash->success($this->t->_("infoChanged"));
                     }
                 }
 
@@ -160,7 +160,7 @@ class UserinfoController extends ControllerBase
             }
 
         } else {
-            $this->flash->error("Вы можете редактировать только свою учетную запись");
+            $this->flash->error($this->t->_("cantEditAnotherAcc"));
             return $this->response->redirect("index");
         }
 

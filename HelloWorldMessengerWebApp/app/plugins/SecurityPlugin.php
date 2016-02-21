@@ -13,8 +13,32 @@ class SecurityPlugin extends Plugin {
     public function beforeExecuteRoute(Event $event, Dispatcher $dispatcher)
     {
 
-        $auth = $this->session->get('auth');
-        if (!$auth) {
+        //если не залогинен, но есть кука с логином
+        if (!$this->session->get('auth') && $this->cookies->has("HWM")) {
+
+            $login = rtrim($this->cookies->get("HWM")->getValue(), "\0");
+            $user = User::findFirst(
+                array(
+                    "login = :login:",
+                    'bind' => array(
+                        'login' => $login
+                    )
+                )
+            );
+
+            if ($user) {
+                $this->session->set(
+                    'auth',
+                    array(
+                        'login' => $login
+                    )
+                );
+            }
+        }
+
+
+
+        if (!$this->session->get('auth')) {
             $role = 'Guests';
         } else {
             $role = 'Users';

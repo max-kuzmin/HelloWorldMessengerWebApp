@@ -97,10 +97,12 @@ class User extends \Phalcon\Mvc\Model
 
     public function validation()
     {
+
         $this->validate(
             new Uniqueness(
                 array(
-                    "field"  => "login"
+                    "field"  => "login",
+                    'message' => $this->getDI()->get('t')->_("userExists")
                 )
             )
         );
@@ -109,13 +111,17 @@ class User extends \Phalcon\Mvc\Model
         $this->validate(new StringLength(array(
             "field" => 'login',
             'max' => 20,
-            'min' => 3
+            'min' => 3,
+            'messageMinimum' => $this->getDI()->get('t')->_("loginShortLong"),
+            'messageMaximum' => $this->getDI()->get('t')->_("loginShortLong"),
         )));
 
         $this->validate(new StringLength(array(
             "field" => 'pass',
             'max' => 32,
-            'min' => 32
+            'min' => 32,
+            'messageMinimum' => $this->getDI()->get('t')->_("passMD5"),
+            'messageMaximum' => $this->getDI()->get('t')->_("passMD5"),
         )));
 
 
@@ -123,19 +129,22 @@ class User extends \Phalcon\Mvc\Model
             new Email(
                 array(
                     "field"  => "email",
+                    'message' => $this->getDI()->get('t')->_("wrongEmail")
                 )
             )
         );
 
         $this->validate(new StringLength(array(
             "field" => 'name',
-            'min' => 3
+            'min' => 3,
+            'messageMinimum' => $this->getDI()->get('t')->_("nameShort")
         )));
 
         $this->validate(
             new PresenceOf(
                 array(
                     "field"  => "country",
+                    'message' => $this->getDI()->get('t')->_("needCountry")
                 )
             )
         );
@@ -144,9 +153,12 @@ class User extends \Phalcon\Mvc\Model
             new PresenceOf(
                 array(
                     "field"  => "gender",
+                    'message' => $this->getDI()->get('t')->_("needGender")
                 )
             )
         );
+
+
 
         return $this->validationHasFailed() != true;
     }

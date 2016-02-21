@@ -73,7 +73,7 @@ class DialogController extends ControllerBase
 
 
             if (!($friends && $friends->confirm1 && $friends->confirm2)) {
-                $this->flash->error("Вы должны быть друзьями, чтобы создать диалог");
+                $this->flash->error($this->t->_("mustBeFriendsToCreateDialog"));
                 return $this->response->redirect($this->request->getHTTPReferer());
             }
 
@@ -95,13 +95,13 @@ class DialogController extends ControllerBase
                 $userdialog2->login = $this->session->get('auth')['login'];
 
                 if ($userdialog->save() && $userdialog2->save()) {
-                    $this->flash->success("Диалог создан");
+                    $this->flash->success($this->t->_("dialogCreated"));
                     return $this->response->redirect("message/showmessages?dialogid=" . $dialog->dialog_id);
                 }
             }
         }
 
-        $this->flash->error("Ошибка создания диалога");
+        $this->flash->error($this->t->_("dialogCreationError"));
         return $this->response->redirect("index");
     }
 
@@ -128,7 +128,7 @@ class DialogController extends ControllerBase
             ));
 
             if (!($friends && $friends->confirm1 && $friends->confirm2)) {
-                $this->flash->error("Вы должны быть друзьями, чтобы создать диалог");
+                $this->flash->error($this->t->_("mustBeFriendsToAddUser"));
                 return $this->response->redirect($this->request->getHTTPReferer());
             }
 
@@ -156,7 +156,7 @@ class DialogController extends ControllerBase
                 );
 
                 if ($userdialog) {
-                    $this->flash->error("Пользователь уже добавлен в диалог");
+                    $this->flash->error($this->t->_("userAlreadyInDialog"));
                     return $this->response->redirect($this->request->getHTTPReferer());
                 }
 
@@ -166,13 +166,13 @@ class DialogController extends ControllerBase
                 $userdialog->login = $user->login;
 
                 if ($userdialog->save()) {
-                    $this->flash->success("Пользователь добавлен в диалог");
+                    $this->flash->success($this->t->_("userAddedToDialog"));
                     return $this->response->redirect($this->request->getHTTPReferer());
                 }
             }
         }
 
-        $this->flash->error("Ошибка добавления пользователя в диалог");
+        $this->flash->error($this->t->_("errorAddingUserInDialog"));
         return $this->response->redirect("index");
     }
 
@@ -193,12 +193,12 @@ class DialogController extends ControllerBase
 
         if ($myuserdialog) {
             if ($myuserdialog->delete()) {
-                $this->flash->success("Диалог удален");
+                $this->flash->success($this->t->_("dialogRemoved"));
                 return $this->response->redirect('dialog/showdialogs');
             }
         }
 
-        $this->flash->error("Ошибка удаления диалога");
+        $this->flash->error($this->t->_("errorRemovingDialog"));
         return $this->response->redirect('dialog/showdialogs');
     }
 
@@ -221,12 +221,12 @@ class DialogController extends ControllerBase
             $dialog = $myuserdialog->getDialog();
             $dialog->name = $this->request->get('name');
             if ($dialog->save()) {
-                $this->flash->success("Диалог переименован");
+                $this->flash->success($this->t->_("dialogRenamed"));
                 return $this->response->redirect('dialog/showdialogs');
             }
         }
 
-        $this->flash->error("Ошибка переименования диалога");
+        $this->flash->error($this->t->_("errorRenamingDialog"));
         return $this->response->redirect($this->request->getHTTPReferer());
     }
 

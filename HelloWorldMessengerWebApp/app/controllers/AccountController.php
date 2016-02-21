@@ -29,24 +29,31 @@ class AccountController extends ControllerBase
                     $this->session->set(
                         'auth',
                         array(
-                            'login' => $user->login,
-                            'name' => $user->name
+                            'login' => $user->login
                         )
                     );
 
-                    $this->flash->success('Привет, ' . $user->name);
+
+                    if ($this->request->getPost("remember") == "on") {
+
+                        $this->cookies->set("HWM", $user->login, time() + 30 * 86400);
+                    }
+
+
+
+                    $this->flash->success($this->t->_("hello") . ', ' . $user->name);
 
                     return $this->response->redirect("index");
                 }
                 else {
-                    $this->flash->error('Сначала необходимо подтвердить вашу учетную запись');
+                    $this->flash->error($this->t->_("confirmAcc"));
                     return $this->response->redirect("index");
                 }
             }
 
 
 
-            $this->flash->error('Неверный логин или пароль');
+            $this->flash->error($this->t->_("wrongLoginPass"));
 
         }
 
@@ -67,17 +74,17 @@ class AccountController extends ControllerBase
             );
 
             if ($user) {
-                $this->flash->error("Пользователь с таким логином уже существует");
+                $this->flash->error($this->t->_("userExists"));
                 return;
             }
 
             if (strlen($this->request->getPost("pass"))<5) {
-                $this->flash->error("Пароль слишком короткий");
+                $this->flash->error($this->t->_("shortPass"));
                 return;
             }
 
             if ($this->request->getPost("pass") != $this->request->getPost("pass2")) {
-                $this->flash->error("Пароли не совпадают");
+                $this->flash->error($this->t->_("wrong2Pass"));
                 return;
             }
 
@@ -94,9 +101,9 @@ class AccountController extends ControllerBase
 
             if ($user->save()) {
 
-                if ($this->SendEmailWithToken($user->email, $user->token, "For completing registration go to ")) {
+                if ($this->SendEmailWithToken($user->email, $user->token, $this->t->_("regEmail"))) {
 
-                    $this->flash->success("Регистрация завершена. Письмо с подтверждением отправлено на указанный e-mail");
+                    $this->flash->success($this->t->_("regComplete"));
                     return $this->response->redirect("index");
                 }
 
@@ -107,14 +114,16 @@ class AccountController extends ControllerBase
             }
         }
 
-        //$this->flash->error("Ошибка регистрации");
 
     }
 
     public function logoutAction()
     {
-        $this->session->remove("auth");
-        $this->flash->success("Вы вышли из системы");
+        $this->session->destroy();
+        $this->flash->success($this->t->_("logout"));
+
+        if ($this->cookies->has("HWM"))
+            $this->cookies->get("HWM")->delete();
 
         return $this->response->redirect("index");
     }
@@ -150,7 +159,7 @@ class AccountController extends ControllerBase
                         )
                     );
 
-                    $this->flash->success("Учетная запись успешно подтверждена");
+                    $this->flash->success($this->t->_("accConfirmed"));
                     return $this->response->redirect("index");
                 }
 
@@ -161,7 +170,7 @@ class AccountController extends ControllerBase
 
         }
 
-        $this->flash->error("Ошибка потверждения учетной записи");
+        $this->flash->error($this->t->_("accConfirmError"));
 
         return $this->response->redirect("index");
     }
@@ -190,9 +199,9 @@ class AccountController extends ControllerBase
 
                 if ($user->save()) {
 
-                    if ($this->SendEmailWithToken($user->email, $user->token, "For restoring account go to ")) {
+                    if ($this->SendEmailWithToken($user->email, $user->token, $this->t->_("restoreEmail"))) {
 
-                        $this->flash->success("Письмо с ключем для входа отправлено на указанный e-mail");
+                        $this->flash->success($this->t->_("restoreInfo"));
                         return $this->response->redirect("index");
                     }
 
@@ -201,7 +210,7 @@ class AccountController extends ControllerBase
             }
 
 
-            $this->flash->error("Учетная запись не найдена");
+            $this->flash->error($this->t->_("noUser"));
         }
 
     }
