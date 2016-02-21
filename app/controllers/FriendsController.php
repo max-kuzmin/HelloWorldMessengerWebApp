@@ -61,14 +61,14 @@ class FriendsController extends ControllerBase
 
                 if ($friends->save()) {
 
-                    $this->flash->success("Пользователь добавлен в друзья");
+                    $this->flash->success($this->t->_("userAddedInFriends"));
                     return $this->response->redirect($this->request->getHTTPReferer());
                 }
             }
 
         }
 
-        $this->flash->error("Ошибка добавления в друзья");
+        $this->flash->error($this->t->_("errorAddingInFriends"));
         return $this->response->redirect("index");
 
     }
@@ -132,7 +132,7 @@ class FriendsController extends ControllerBase
 
                 if ($friends) {
                     $friends->delete();
-                    $this->flash->success("Пользователь удален из друзей");
+                    $this->flash->success($this->t->_("userRemovedFromFriends"));
                     return $this->response->redirect($this->request->getHTTPReferer());
                 }
 
@@ -140,7 +140,7 @@ class FriendsController extends ControllerBase
 
         }
 
-        $this->flash->error("Ошибка удаления");
+        $this->flash->error($this->t->_("errorRemovingFromFriends"));
         return $this->response->redirect("index");
 
     }

@@ -5,7 +5,9 @@
  * @var \Phalcon\Config $config
  */
 
+use Phalcon\Crypt;
 use Phalcon\Di\FactoryDefault;
+use Phalcon\Http\Response\Cookies;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
@@ -15,6 +17,8 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Manager;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Libraries\PHPMailer\PHPMailer;
+use Phalcon\Translate\Adapter\NativeArray;
+
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
  */
@@ -93,7 +97,8 @@ $di->set('flash', function () {
  * Start the session the first time some component request the session service
  */
 $di->setShared('session', function () {
-    $session = new SessionAdapter();
+
+    $session = new SessionAdapter(array('uniqueId' => 'HWM'));
     $session->start();
 
     return $session;
@@ -112,6 +117,23 @@ $di->setShared('dispatcher', function() {
     return $dispatcher;
 });
 
+$di->setShared('crypt', function () {
+    $crypt = new Crypt();
+
+    $crypt->setKey('83dk19a283dk19a2');
+    $crypt->setCipher("rijndael-128");
+
+    return $crypt;
+});
+
+
+$di->setShared('cookies', function () {
+    $cookies = new Cookies();
+
+    $cookies->useEncryption(true);
+
+    return $cookies;
+});
 
 
 $di->setShared('mail', function () {
@@ -134,10 +156,23 @@ $di->setShared('mail', function () {
 );
 
 
+
+$di->setShared('t', function () {
+    require APP_PATH.'/app/messages/ru.php';
+    return new NativeArray(
+        array(
+            "content" => $messages
+        )
+    );
+});
+
+
 $di->setShared('countries', function () {
-    return ["Россия", "Украина"];
+    require APP_PATH.'/app/messages/ru.php';
+    return $countries;
 });
 
 $di->setShared('genders', function () {
-    return ["Муж", "Жен"];
+    require APP_PATH.'/app/messages/ru.php';
+    return $genders;
 });
