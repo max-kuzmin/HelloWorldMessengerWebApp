@@ -7,5 +7,3 @@
 <p>Страна: {{ this.countries[user.country] }}</p>
 
 {{ link_to("userinfo\editinfo?login=" ~ user.login, "Редактировать") }}
-
-{{ flash.output() }}

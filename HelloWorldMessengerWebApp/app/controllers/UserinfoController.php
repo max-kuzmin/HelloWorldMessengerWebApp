@@ -9,11 +9,14 @@ class UserinfoController extends ControllerBase
     {
         if ($this->request->isGet()) {
 
+            $login = $this->request->get("login");
+            $login = $login ? $login : $this->session->get("auth")["login"];
+
             $user = User::findFirst(
                 array(
                     "login = :login:",
                     'bind' => array(
-                        'login' => $this->request->get("login")
+                        'login' => $login
                     )
                 )
             );
