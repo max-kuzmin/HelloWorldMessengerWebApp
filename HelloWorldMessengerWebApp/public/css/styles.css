@@ -4,3 +4,23 @@
 .brdr-top {
     border-top: 1px dotted lightgray
 }
+
+.imgbig {
+    min-width: 100px;
+    height: 200px;
+    max-width: 200px;
+}
+
+.imgsmall {
+    height: 70px;
+    max-width: 70px;
+    min-width: 30px;
+}
+
+dt {
+    margin-bottom: 0.5em;
+}
+
+dd {
+    margin-bottom: 0.5em;
+}
