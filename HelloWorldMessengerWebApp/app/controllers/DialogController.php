@@ -39,12 +39,32 @@ class DialogController extends ControllerBase
 
                 $dialogs[]=array(
                     $dialog,
-                    $users
+                    $users,
+                    $userdialog->new
                 );
             }
 
                 $this->view->dialogs=$dialogs;
 
+        }
+    }
+
+
+
+    public function checknewAction() {
+
+        if ($this->request->isGet()) {
+
+            $userdialogs = UserDialog::find(
+                array(
+                    "login = :login: AND new = true",
+                    'bind' => array(
+                        'login' => $this->session->get("auth")["login"]
+                    )
+                )
+            );
+
+            return $this->response->setJsonContent(["status" => count($userdialogs)]);
         }
     }
 
@@ -118,7 +138,7 @@ class DialogController extends ControllerBase
 
         if ($user) {
 
-            //проверка, я вляется ли пользователь другом
+            //проверка, является ли пользователь другом
             $friends = Friends::findFirst(array(
                 "(login1 = :mylogin: AND login2 = :login:) OR (login2 = :mylogin: AND login1 = :login:)",
                 'bind' => array(
