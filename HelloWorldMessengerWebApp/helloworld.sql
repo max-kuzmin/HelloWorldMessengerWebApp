@@ -33,7 +33,11 @@ INSERT INTO `dialog` (`dialog_id`, `name`, `time`) VALUES
 (18,	'123 - aaaaa',	1455974512),
 (19,	'123 - aaaaa',	1455975197),
 (20,	'cool_dialog',	1455988400),
-(21,	'aaaaa - 123',	1455979958);
+(21,	'aaaaa - 123',	1455979958),
+(22,	'newname',	1456217394),
+(23,	'aaaaa - 123',	1456250005),
+(24,	'aaaaa - 123',	1456252947),
+(25,	'fgbfbgbf',	1456253120);
 
 DROP TABLE IF EXISTS `friends`;
 CREATE TABLE `friends` (
@@ -47,7 +51,7 @@ CREATE TABLE `friends` (
 
 INSERT INTO `friends` (`id`, `login1`, `login2`, `confirm1`, `confirm2`) VALUES
 (16,	'123',	'aaaaa',	CONV('1', 2, 10) + 0,	CONV('1', 2, 10) + 0),
-(17,	'aaaaa',	'111',	CONV('1', 2, 10) + 0,	CONV('1', 2, 10) + 0);
+(23,	'aaaaa',	'111',	CONV('1', 2, 10) + 0,	CONV('0', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `image`;
 CREATE TABLE `image` (
@@ -197,7 +201,9 @@ INSERT INTO `user` (`login`, `pass`, `name`, `email`, `token`, `gender`, `countr
 ('55',	'b53b3a3d6ab90ce0268229151c9bde11',	'55',	'55',	'',	CONV('0', 2, 10) + 0,	0),
 ('77',	'28dd2c7955ce926456240b2ff0100bde',	'77',	'77',	'',	CONV('0', 2, 10) + 0,	0),
 ('9',	'45c48cce2e2d7fbdea1afc51c7c6ad26',	'9',	'9',	'',	CONV('0', 2, 10) + 0,	0),
-('aaaaa',	'594f803b380a41396ed63dca39503542',	'aaaaa1',	'max@pochtamt.ru',	'',	CONV('1', 2, 10) + 0,	1);
+('aaaaa',	'594f803b380a41396ed63dca39503542',	'Иван Иванов',	'max@pochtamt.ru',	'',	CONV('0', 2, 10) + 0,	0),
+('dfsgfdg',	'437599f1ea3514f8969f161a6606ce18',	'dfgsd',	'fadsgsdfg@mail.ru',	'5d16b9024bd2e3fc8f6b72764910cf7d',	CONV('0', 2, 10) + 0,	0),
+('eeeee',	'86871b9b1ab33b0834d455c540d82e89',	'eeeee',	'ee@ee.ro',	'34f2eb43141850067e5c38515a3d372e',	CONV('0', 2, 10) + 0,	4);
 
 DROP TABLE IF EXISTS `user_dialog`;
 CREATE TABLE `user_dialog` (
@@ -234,6 +240,11 @@ INSERT INTO `user_dialog` (`id`, `dialog_id`, `login`, `new`) VALUES
 (30,	20,	'aaaaa',	CONV('0', 2, 10) + 0),
 (31,	20,	'111',	CONV('1', 2, 10) + 0),
 (32,	21,	'123',	CONV('1', 2, 10) + 0),
-(34,	21,	'111',	CONV('1', 2, 10) + 0);
+(34,	21,	'111',	CONV('1', 2, 10) + 0),
+(35,	22,	'123',	CONV('1', 2, 10) + 0),
+(37,	23,	'123',	CONV('1', 2, 10) + 0),
+(39,	24,	'123',	CONV('1', 2, 10) + 0),
+(41,	25,	'123',	CONV('1', 2, 10) + 0),
+(42,	25,	'aaaaa',	CONV('0', 2, 10) + 0);
 
--- 2016-02-20 18:02:54
+-- 2016-02-23 19:02:26
