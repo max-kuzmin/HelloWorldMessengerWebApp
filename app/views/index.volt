@@ -50,9 +50,9 @@
 
             <ul class="nav nav-pills nav-stacked nav-pills-stacked-example panel panel-default">
                 <li class="brdr-btm">{{ link_to("userinfo\showinfo", "Моя страница") }}</li>
-                <li class="brdr-btm brdr-top">{{ link_to("dialog\showdialogs", "Диалоги") }}</li>
-                <li class="brdr-btm brdr-top">{{ link_to("friends\showfriends", "Друзья") }}</li>
-                <li class="brdr-top">{{ link_to("search\searchusers", "Поиск") }}</li>
+                <li class="brdr-btm brdr-top">{{ link_to("dialog\showdialogs", 'Мои диалоги <span id="newdialogs" class="label label-default" style="margin-left: 1em"></span> ') }}</li>
+                <li class="brdr-btm brdr-top">{{ link_to("friends\showfriends", 'Мои друзья <span id="newfriends" class="label label-default" style="margin-left: 1em"></span>') }}</li>
+                <li class="brdr-top">{{ link_to("search\searchusers", "Поиск людей") }}</li>
             </ul>
 
 

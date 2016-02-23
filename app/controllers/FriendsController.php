@@ -145,5 +145,34 @@ class FriendsController extends ControllerBase
 
     }
 
+
+
+    public function checknewAction() {
+
+        $friends = Friends::find(array(
+            "login1 = :mylogin: OR login2 = :mylogin:",
+            'bind' => array(
+                'mylogin' => $this->session->get('auth')["login"],
+            )
+        ));
+
+        $num = 0;
+
+        foreach ($friends as $friend) {
+            if (
+                (($friend->login1 == $this->session->get('auth')["login"] && !($friend->confirm1))
+                    || ($friend->login2 == $this->session->get('auth')["login"] && !($friend->confirm2)))
+            ) {
+                $num++;
+            }
+
+        }
+
+        return $this->response->setJsonContent(["status" => $num]);
+
+
+
+    }
+
 }
 

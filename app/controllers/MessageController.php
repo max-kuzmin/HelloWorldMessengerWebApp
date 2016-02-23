@@ -36,7 +36,7 @@ class MessageController extends ControllerBase
 
 
                     $this->view->messages = count($messages) > 0 ? $messages : array();
-                    $this->view->dialogid = $dialog->dialog_id;
+                    $this->view->dialog = $dialog;
 
                     //отмечаем диалог как прочитанный
                     $userdialog->new = false;

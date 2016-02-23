@@ -54,7 +54,7 @@ class SecurityPlugin extends Plugin {
         if ($allowed != Acl::ALLOW) {
 
             // если у роли нет доступа возвращаемся на главную
-            $this->flash->error("У вас недостаточно прав для выполнения данного действия");
+            $this->flash->error($this->t->_("noaccess"));
             $dispatcher->forward(
                 array(
                     'controller' => 'index',
@@ -86,10 +86,10 @@ class SecurityPlugin extends Plugin {
         $userResources = array(
             'account'    => array('logout'),
             'userinfo'    => array('showinfo', 'getavatar', 'editinfo'),
-            'dialog'   => array('showdialogs', 'createdialog', 'addusertodialog', 'removedialog', 'renamedialog'),
+            'dialog'   => array('showdialogs', 'createdialog', 'addusertodialog', 'removedialog', 'renamedialog', 'checknew'),
             'message' => array('showmessages', 'addmessage', 'showimage'),
             'search' => array('searchusers'),
-            'friends' => array('addfriend', 'showfriends', 'removefriend')
+            'friends' => array('addfriend', 'showfriends', 'removefriend', 'checknew')
         );
         foreach ($userResources as $resource => $actions) {
             $acl->addResource(new Resource($resource), $actions);
