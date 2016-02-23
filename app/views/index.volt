@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>HelloWorld Messenger</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    {{ stylesheetLink("css/styles.css") }}
+    {{ stylesheet_link("css/styles.css") }}
 </head>
 <body>
 <div class="container">
@@ -60,7 +60,7 @@
 
         {% endif %}
         <div class="col-lg-10">
-            <div class="row">
+            <div class="row" style="margin-left: 1em">
                 {{ content() }}
             </div>
         </div>
@@ -78,5 +78,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+{{ javascript_include("js/scripts.js") }}
 </body>
 </html>

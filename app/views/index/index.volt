@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h1>Congratulations!</h1>
+    <h1>Error</h1>
 </div>
 
 {% if login %}

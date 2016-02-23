@@ -105,7 +105,7 @@ class SecurityPlugin extends Plugin {
 
         //открытые методы
         $publicResources = array(
-            'index'    => array('index'),
+            'index'    => array('index', 'error404'),
             'account'    => array('check')
         );
         foreach ($publicResources as $resource => $actions) {

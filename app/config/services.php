@@ -84,12 +84,12 @@ $di->setShared('modelsMetadata', function () {
 /**
  * Register the session flash service with the Twitter Bootstrap classes
  */
-$di->set('flash', function () {
+$di->setShared('flash', function () {
     return new Flash(array(
-        'error'   => 'alert alert-danger',
-        'success' => 'alert alert-success',
-        'notice'  => 'alert alert-info',
-        'warning' => 'alert alert-warning'
+        'error'   => 'alert alert-danger alert-dismissible',
+        'success' => 'alert alert-success alert-dismissible',
+        'notice'  => 'alert alert-info alert-dismissible',
+        'warning' => 'alert alert-warning alert-dismissible'
     ));
 });
 
@@ -110,6 +110,26 @@ $di->setShared('dispatcher', function() {
     //проверка на авторизацию
     $eventsManager = new Manager();
     $eventsManager->attach('dispatch:beforeExecuteRoute', new SecurityPlugin);
+
+    //перехват 404
+    $eventsManager->attach(
+        "dispatch:beforeException",
+        function($event, $dispatcher, $exception)
+        {
+            switch ($exception->getCode()) {
+                case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+                case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+
+                    $dispatcher->forward(
+                        array(
+                            'controller' => 'index',
+                            'action'     => 'error404',
+                        )
+                    );
+                    return false;
+            }
+        }
+    );
 
     $dispatcher = new Dispatcher();
     $dispatcher->setEventsManager($eventsManager);

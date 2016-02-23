@@ -12,23 +12,39 @@ class IndexController extends ControllerBase
             $this->dispatcher->forward(
                 array(
                     "controller" => "userinfo",
-                    "action"     => "showinfo"
+                    "action" => "showinfo"
                 )
             );
 
-        }
-        else {
+        } else {
             $this->view->login = false;
 
             $this->dispatcher->forward(
                 array(
                     "controller" => "account",
-                    "action"     => "login"
+                    "action" => "login"
                 )
             );
         }
 
     }
+
+
+    public function error404Action()
+    {
+
+        $this->flash->error($this->t->_("error404"));
+
+        $this->dispatcher->forward(
+            array(
+                "controller" => "index",
+                "action" => "index"
+            )
+        );
+
+
+    }
+
 
 }
 
