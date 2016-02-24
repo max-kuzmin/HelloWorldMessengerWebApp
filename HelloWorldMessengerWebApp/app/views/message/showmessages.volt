@@ -1,7 +1,12 @@
 <h4 class="brdr-btm" style="padding-bottom: 0.5em; margin-bottom: 1em"><strong>{{dialog.name}}</strong></h4>
 
+
 <div style="margin-bottom: 1em; text-align: right">
-    {{ link_to("dialog\removedialog?dialogid="~dialog.dialog_id, "Удалить диалог", "class" : "btn btn-default btn-xs") }}
+    <button onclick="loadPrevMessages()" class="btn btn-default btn-xs" id="loadmore" style="margin-right: 1em;">
+        Загрузить предыдущие сообшения
+    </button>
+    {{ link_to("dialog\removedialog?dialogid="~dialog.dialog_id, "Удалить диалог", "class" : "btn btn-default btn-xs")
+    }}
     <button class="btn btn-default btn-xs" style="margin-left: 1em" onclick="$('#editname').show()">
         Переименовать диалог
     </button>
@@ -10,7 +15,6 @@
     </button>
 
 </div>
-
 
 
 <div class="panel panel-default" id="editname" hidden>
@@ -28,7 +32,6 @@
 </div>
 
 
-
 <div class="panel panel-default" id="adduser" hidden>
     <div class="panel-body">
         <button type="button" class="close" onclick="$('#adduser').hide()">
@@ -43,21 +46,23 @@
     </div>
 </div>
 
-загрузить до времени
-загрузить после времени
-отправить асинхронно
+<div id="messages_container" class="panel panel-default"
+     style="background-color: #f5f5f5; padding: 1em; max-height: 350px; overflow-y: scroll">
+    {{ partial("message/partial") }}
+</div>
 
-{% for message in messages %}
-<p>
-    {{ message.login ~ ": " ~ message.text }}
-    {{ image("message/showimage?messageid="~message.message_id) }}
-</p>
-{% endfor %}
+{{ form("message/addmessage", "id": "sendmessage", "enctype":"multipart/form-data") }}
 
-{{ form("message/addmessage", "enctype":"multipart/form-data") }}
 {{ hidden_field("dialogid", "value": dialog.dialog_id) }}
-<input type="file" name="image">
-{{ text_area("text", "rows" : 10) }}
-{{ submit_button("Отправить") }}
+
+<div>
+    {{ text_area("text", "rows" : 5, "class" : "form-control", "placeholder" : "Введите сообщение ... ") }}
+</div>
+<div style="margin-top: 0.5em">
+    <input type="file" name="image" id="image" class="form-control">
+</div>
+<div style="margin-top: 1em">
+    {{ submit_button("Отправить", "class" : "btn btn-primary", "style" : "width:20%") }}
+</div>
 
 {{ endForm() }}

@@ -70,14 +70,12 @@ class Image extends \Phalcon\Mvc\Model
     }
 
 
-
-
     public function validation()
     {
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "img"
+                    "field" => "img"
                 )
             )
         );
@@ -86,7 +84,7 @@ class Image extends \Phalcon\Mvc\Model
         $this->validate(
             new Uniqueness(
                 array(
-                    "field"  => "img_id"
+                    "field" => "img_id"
                 )
             )
         );

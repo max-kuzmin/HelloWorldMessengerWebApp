@@ -14,7 +14,8 @@ class DialogController extends ControllerBase
                     "login = :login:",
                     'bind' => array(
                         'login' => $this->session->get("auth")["login"]
-                    )
+                    ),
+                    "order" => "new DESC"
                 )
             );
 
@@ -33,25 +34,25 @@ class DialogController extends ControllerBase
                     )
                 );
 
-                foreach ($otherUserdialogs as $otherUserdialog){
+                foreach ($otherUserdialogs as $otherUserdialog) {
                     $users[] = $otherUserdialog->getUser();
                 }
 
-                $dialogs[]=array(
+                $dialogs[] = array(
                     $dialog,
                     $users,
                     $userdialog->new
                 );
             }
 
-                $this->view->dialogs=$dialogs;
+            $this->view->dialogs = $dialogs;
 
         }
     }
 
 
-
-    public function checknewAction() {
+    public function checknewAction()
+    {
 
         if ($this->request->isGet()) {
 
@@ -75,7 +76,7 @@ class DialogController extends ControllerBase
             array(
                 "login = :login:",
                 'bind' => array(
-                    'login'    => $this->request->get('login')
+                    'login' => $this->request->get('login')
                 )
             )
         );
@@ -100,7 +101,7 @@ class DialogController extends ControllerBase
 
             $dialog = new Dialog();
             $dialog->time = time();
-            $dialog->name = $this->session->get('auth')['login']." - ".$user->login;
+            $dialog->name = $this->session->get('auth')['login'] . " - " . $user->login;
 
             if ($dialog->save()) {
 
@@ -131,7 +132,7 @@ class DialogController extends ControllerBase
             array(
                 "login = :login:",
                 'bind' => array(
-                    'login'    => $this->request->get('login')
+                    'login' => $this->request->get('login')
                 )
             )
         );
@@ -157,7 +158,7 @@ class DialogController extends ControllerBase
                 array(
                     "dialog_id = :dialogid: AND login = :login:",
                     'bind' => array(
-                        'dialogid'    => $this->request->get('dialogid'),
+                        'dialogid' => $this->request->get('dialogid'),
                         'login' => $this->session->get('auth')["login"]
                     )
                 )
@@ -169,7 +170,7 @@ class DialogController extends ControllerBase
                     array(
                         "dialog_id = :dialogid: AND login = :login:",
                         'bind' => array(
-                            'dialogid'    => $this->request->get('dialogid'),
+                            'dialogid' => $this->request->get('dialogid'),
                             'login' => $user->login
                         )
                     )
@@ -197,7 +198,6 @@ class DialogController extends ControllerBase
     }
 
 
-
     public function removedialogAction()
     {
 
@@ -223,7 +223,6 @@ class DialogController extends ControllerBase
     }
 
 
-
     public function renamedialogAction()
     {
 
@@ -237,7 +236,7 @@ class DialogController extends ControllerBase
             )
         );
 
-        if ($myuserdialog && strlen($this->request->get('name'))>1) {
+        if ($myuserdialog && strlen($this->request->get('name')) > 1) {
             $dialog = $myuserdialog->getDialog();
             $dialog->name = $this->request->get('name');
             if ($dialog->save()) {

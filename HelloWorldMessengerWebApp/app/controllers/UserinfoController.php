@@ -28,8 +28,7 @@ class UserinfoController extends ControllerBase
 
                 if ($user->login == $this->session->get("auth")["login"]) {
                     return $this->view->pick("userinfo/showmyinfo");
-                }
-                else {
+                } else {
 
                     $friends = Friends::findFirst(array(
                         "(login1 = :mylogin: AND login2 = :login:) OR (login2 = :mylogin: AND login1 = :login:)",
@@ -45,8 +44,7 @@ class UserinfoController extends ControllerBase
                             || ($friends->login2 == $this->session->get('auth')["login"] && $friends->confirm2))
                     ) {
                         $this->view->halffriend = true;
-                    }
-                    else {
+                    } else {
                         $this->view->halffriend = false;
                     }
 
@@ -55,16 +53,12 @@ class UserinfoController extends ControllerBase
                         $friends->confirm2
                     ) {
                         $this->view->fullfriend = true;
-                    }
-                    else {
+                    } else {
                         $this->view->fullfriend = false;
                     }
 
 
-
-
                 }
-
 
 
             } else {
@@ -116,7 +110,7 @@ class UserinfoController extends ControllerBase
                 $user->name = $this->request->getPost("name");
 
                 $avatar = $this->request->getUploadedFiles()[0];
-                if ($avatar && $avatar->getSize()>0 && $avatar->getSize()<1024*1024) {
+                if ($avatar && $avatar->getSize() > 0 && $avatar->getSize() < 1024 * 1024) {
 
                     $img = Image::findFirst(array(
                         "login = :login:",
@@ -197,7 +191,6 @@ class UserinfoController extends ControllerBase
         }
 
     }
-
 
 
 }

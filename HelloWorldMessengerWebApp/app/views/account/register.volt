@@ -9,8 +9,10 @@
 
     <div class="form-group has-feedback" id="passGroup">
         <label for="pass">Пароль:</label>
-        <input type="password" name="pass" class="form-control" placeholder="Введите пароль" id="pass1" oninput="passCheck()">
-        <input type="password" name="pass2" class="form-control" placeholder="Повторите пароль" id="pass2" oninput="passCheck()">
+        <input type="password" name="pass" class="form-control" placeholder="Введите пароль" id="pass1"
+               oninput="passCheck()">
+        <input type="password" name="pass2" class="form-control" placeholder="Повторите пароль" id="pass2"
+               oninput="passCheck()">
     </div>
 
     <div class="form-group">

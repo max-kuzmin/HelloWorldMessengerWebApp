@@ -13,7 +13,7 @@ class FriendsController extends ControllerBase
                 array(
                     "login = :login:",
                     'bind' => array(
-                        'login'    => $this->request->get('login')
+                        'login' => $this->request->get('login')
                     )
                 )
             );
@@ -38,8 +38,7 @@ class FriendsController extends ControllerBase
 
                         $friends->confirm1 = true;
 
-                    }
-                    else {
+                    } else {
 
                         /*if ($friends->confirm2) {
                             $this->flash->error("Пользователь уже в друзьях, необходимо дождаться, пока он добавит вас в друзья тоже");
@@ -49,8 +48,7 @@ class FriendsController extends ControllerBase
                         $friends->confirm2 = true;
 
                     }
-                }
-                else {
+                } else {
                     $friends = new Friends();
                     $friends->login1 = $this->session->get('auth')["login"];
                     $friends->login2 = $this->request->get('login');
@@ -91,20 +89,17 @@ class FriendsController extends ControllerBase
 
             foreach ($friends as $friend) {
                 if ($friend->login1 == $this->session->get("auth")["login"]) {
-                    $users[] = array($friend->getUser2(), $friend->confirm1) ;
-                }
-                else {
+                    $users[] = array($friend->getUser2(), $friend->confirm1);
+                } else {
                     $users[] = array($friend->getUser1(), $friend->confirm2);
                 }
             }
 
             $this->view->friends = $users;
-        }
-        else {
+        } else {
             $this->view->friends = false;
         }
     }
-
 
 
     public function removefriendAction()
@@ -115,7 +110,7 @@ class FriendsController extends ControllerBase
                 array(
                     "login = :login:",
                     'bind' => array(
-                        'login'    => $this->request->get('login')
+                        'login' => $this->request->get('login')
                     )
                 )
             );
@@ -146,8 +141,8 @@ class FriendsController extends ControllerBase
     }
 
 
-
-    public function checknewAction() {
+    public function checknewAction()
+    {
 
         $friends = Friends::find(array(
             "login1 = :mylogin: OR login2 = :mylogin:",
@@ -160,8 +155,8 @@ class FriendsController extends ControllerBase
 
         foreach ($friends as $friend) {
             if (
-                (($friend->login1 == $this->session->get('auth')["login"] && !($friend->confirm1))
-                    || ($friend->login2 == $this->session->get('auth')["login"] && !($friend->confirm2)))
+            (($friend->login1 == $this->session->get('auth')["login"] && !($friend->confirm1))
+                || ($friend->login2 == $this->session->get('auth')["login"] && !($friend->confirm2)))
             ) {
                 $num++;
             }
@@ -169,7 +164,6 @@ class FriendsController extends ControllerBase
         }
 
         return $this->response->setJsonContent(["status" => $num]);
-
 
 
     }

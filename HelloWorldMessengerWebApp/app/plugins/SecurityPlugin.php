@@ -87,7 +87,7 @@ class SecurityPlugin extends Plugin {
             'account'    => array('logout'),
             'userinfo'    => array('showinfo', 'getavatar', 'editinfo'),
             'dialog'   => array('showdialogs', 'createdialog', 'addusertodialog', 'removedialog', 'renamedialog', 'checknew'),
-            'message' => array('showmessages', 'addmessage', 'showimage'),
+            'message' => array('showmessages', 'addmessage', 'showimage', 'showlastmessages', 'showprevmessages'),
             'search' => array('searchusers'),
             'friends' => array('addfriend', 'showfriends', 'removefriend', 'checknew')
         );

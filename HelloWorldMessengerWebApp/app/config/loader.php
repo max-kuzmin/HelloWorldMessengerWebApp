@@ -14,7 +14,7 @@ $loader->registerDirs(
 );
 
 $loader->registerNamespaces([
-    'Libraries'  => APP_PATH.'/app/libraries/'
+    'Libraries' => APP_PATH . '/app/libraries/'
 ]);
 
 $loader->register();

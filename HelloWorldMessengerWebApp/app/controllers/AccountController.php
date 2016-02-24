@@ -40,17 +40,14 @@ class AccountController extends ControllerBase
                     }
 
 
-
                     $this->flash->success($this->t->_("hello") . ', ' . $user->name);
 
                     return $this->response->redirect("index");
-                }
-                else {
+                } else {
                     $this->flash->error($this->t->_("confirmAcc"));
                     return $this->response->redirect("index");
                 }
             }
-
 
 
             $this->flash->error($this->t->_("wrongLoginPass"));
@@ -78,7 +75,7 @@ class AccountController extends ControllerBase
                 return;
             }
 
-            if (strlen($this->request->getPost("pass"))<5) {
+            if (strlen($this->request->getPost("pass")) < 5) {
                 $this->flash->error($this->t->_("shortPass"));
                 return;
             }
@@ -91,13 +88,13 @@ class AccountController extends ControllerBase
             $user = new User();
             $user->login = $this->request->getPost("login");
 
-            $user->gender = ($this->request->getPost("gender") == 1)? true : false;
+            $user->gender = ($this->request->getPost("gender") == 1) ? true : false;
             $user->country = $this->request->getPost("country");
 
             $user->pass = md5($this->request->getPost("pass"));
             $user->name = $this->request->getPost("name");
             $user->email = $this->request->getPost("email");
-            $user->token = md5(rand().rand().rand());
+            $user->token = md5(rand() . rand() . rand());
 
             if ($user->save()) {
 
@@ -174,7 +171,6 @@ class AccountController extends ControllerBase
 
         return $this->response->redirect("index");
     }
-
 
 
     public function forgotPassAction()
