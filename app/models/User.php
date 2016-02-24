@@ -94,14 +94,13 @@ class User extends \Phalcon\Mvc\Model
     }
 
 
-
     public function validation()
     {
 
         $this->validate(
             new Uniqueness(
                 array(
-                    "field"  => "login",
+                    "field" => "login",
                     'message' => $this->getDI()->get('t')->_("userExists")
                 )
             )
@@ -128,7 +127,7 @@ class User extends \Phalcon\Mvc\Model
         $this->validate(
             new Email(
                 array(
-                    "field"  => "email",
+                    "field" => "email",
                     'message' => $this->getDI()->get('t')->_("wrongEmail")
                 )
             )
@@ -143,7 +142,7 @@ class User extends \Phalcon\Mvc\Model
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "country",
+                    "field" => "country",
                     'message' => $this->getDI()->get('t')->_("needCountry")
                 )
             )
@@ -152,12 +151,11 @@ class User extends \Phalcon\Mvc\Model
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "gender",
+                    "field" => "gender",
                     'message' => $this->getDI()->get('t')->_("needGender")
                 )
             )
         );
-
 
 
         return $this->validationHasFailed() != true;

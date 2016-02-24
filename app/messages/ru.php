@@ -2,7 +2,7 @@
 
 
 $messages = array(
-    "hello"      => "Привет",
+    "hello" => "Привет",
     "confirmAcc" => 'Сначала необходимо подтвердить вашу учетную запись',
     "wrongLoginPass" => 'Неверный логин или пароль',
     "userExists" => "Пользователь с таким логином уже существует",
@@ -18,7 +18,7 @@ $messages = array(
     "noUser" => "Учетная запись не найдена",
     "emailSender" => 'HelloWorld Messenger Support',
     "emailTopic" => 'Registration in HelloWorld Messenger',
-    "mustBeFriendsToCreateDialog" =>  "Вы должны быть друзьями, чтобы создать диалог",
+    "mustBeFriendsToCreateDialog" => "Вы должны быть друзьями, чтобы создать диалог",
     "dialogCreated" => "Диалог создан",
     "dialogCreationError" => "Ошибка создания диалога",
     "mustBeFriendsToAddUser" => "Вы должны быть друзьями, чтобы пригласить пользователя в диалог",
@@ -49,7 +49,8 @@ $messages = array(
     "needGender" => "Необходимо указать пол",
     "needLogin" => "Необходимо указать логин",
     "error404" => "Ошибка 404. Страница не найдена",
-    "noaccess" => "У вас недостаточно прав для выполнения данного действия"
+    "noaccess" => "У вас недостаточно прав для выполнения данного действия",
+    "wrongQuery" => "Неверный запрос"
 
 );
 

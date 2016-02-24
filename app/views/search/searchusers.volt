@@ -9,7 +9,7 @@
 </div>
 
 <div id="users_container">
-{{ partial("search/partial") }}
+    {{ partial("search/partial") }}
 </div>
 
 {% if users %}
@@ -17,5 +17,7 @@
 
 {% else %}
 
-<h4><small>Ничего не найдено</small></h4>
+<h4>
+    <small>Ничего не найдено</small>
+</h4>
 {% endif %}

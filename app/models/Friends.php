@@ -76,7 +76,6 @@ class Friends extends \Phalcon\Mvc\Model
     }
 
 
-
     public function validation()
     {
 
@@ -93,17 +92,17 @@ class Friends extends \Phalcon\Mvc\Model
         )));
 
         $this->validate(
-        new PresenceOf(
-            array(
-                "field"  => "confirm1",
+            new PresenceOf(
+                array(
+                    "field" => "confirm1",
+                )
             )
-        )
-    );
+        );
 
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "confirm2",
+                    "field" => "confirm2",
                 )
             )
         );

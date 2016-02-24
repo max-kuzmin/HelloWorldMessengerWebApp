@@ -86,9 +86,9 @@ $di->setShared('modelsMetadata', function () {
  */
 $di->setShared('flash', function () {
     return new Flash(array(
-        'error'   => 'alert alert-danger alert-dismissible',
+        'error' => 'alert alert-danger alert-dismissible',
         'success' => 'alert alert-success alert-dismissible',
-        'notice'  => 'alert alert-info alert-dismissible',
+        'notice' => 'alert alert-info alert-dismissible',
         'warning' => 'alert alert-warning alert-dismissible'
     ));
 });
@@ -105,7 +105,7 @@ $di->setShared('session', function () {
 });
 
 
-$di->setShared('dispatcher', function() {
+$di->setShared('dispatcher', function () {
 
     //проверка на авторизацию
     $eventsManager = new Manager();
@@ -114,8 +114,7 @@ $di->setShared('dispatcher', function() {
     //перехват 404
     $eventsManager->attach(
         "dispatch:beforeException",
-        function($event, $dispatcher, $exception)
-        {
+        function ($event, $dispatcher, $exception) {
             switch ($exception->getCode()) {
                 case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
                 case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
@@ -123,7 +122,7 @@ $di->setShared('dispatcher', function() {
                     $dispatcher->forward(
                         array(
                             'controller' => 'index',
-                            'action'     => 'error404',
+                            'action' => 'error404',
                         )
                     );
                     return false;
@@ -172,13 +171,12 @@ $di->setShared('mail', function () {
     //$mail->SMTPDebug = 1;
     //$mail->Debugoutput = 'html';
     return $mail;
-    }
+}
 );
 
 
-
 $di->setShared('t', function () {
-    require APP_PATH.'/app/messages/ru.php';
+    require APP_PATH . '/app/messages/ru.php';
     return new NativeArray(
         array(
             "content" => $messages
@@ -188,11 +186,11 @@ $di->setShared('t', function () {
 
 
 $di->setShared('countries', function () {
-    require APP_PATH.'/app/messages/ru.php';
+    require APP_PATH . '/app/messages/ru.php';
     return $countries;
 });
 
 $di->setShared('genders', function () {
-    require APP_PATH.'/app/messages/ru.php';
+    require APP_PATH . '/app/messages/ru.php';
     return $genders;
 });

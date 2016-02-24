@@ -71,9 +71,8 @@
     </div>
 </div>
 
-
-{{ javascript_include("js/bootstrap.min.js") }}
 {{ javascript_include("js/jquery.min.js") }}
 {{ javascript_include("js/scripts.js") }}
+{{ javascript_include("js/bootstrap.min.js") }}
 </body>
 </html>

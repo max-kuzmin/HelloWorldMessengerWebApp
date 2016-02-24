@@ -66,14 +66,12 @@ class Dialog extends \Phalcon\Mvc\Model
     }
 
 
-
-
     public function validation()
     {
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "name"
+                    "field" => "name"
                 )
             )
         );
@@ -81,7 +79,7 @@ class Dialog extends \Phalcon\Mvc\Model
         $this->validate(
             new PresenceOf(
                 array(
-                    "field"  => "time"
+                    "field" => "time"
                 )
             )
         );
@@ -89,7 +87,7 @@ class Dialog extends \Phalcon\Mvc\Model
         $this->validate(
             new Uniqueness(
                 array(
-                    "field"  => "dialog_id"
+                    "field" => "dialog_id"
                 )
             )
         );

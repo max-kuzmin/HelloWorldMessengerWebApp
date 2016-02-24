@@ -13,7 +13,7 @@ class ControllerBase extends Controller
         $this->mail->Subject = $this->t->_("emailTopic");
         $this->mail->Body =
             $message
-            .($this->tag->linkTo("account/check?token=".$token, "link"));
+            . ($this->tag->linkTo("account/check?token=" . $token, "link"));
 
 
         $success = $this->mail->send();
