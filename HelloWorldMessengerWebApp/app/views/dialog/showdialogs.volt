@@ -6,8 +6,11 @@
 <div class="row {% if dialog[2] %} bg-warning {% endif %}" style="margin-top: 1em">
     <div class="col-lg-1">
         <a href="{{ url.get('message\showmessages?dialogid='~dialog[0].dialog_id) }}">
-            {{ image("userinfo\getavatar?login=" ~ dialog[1][0].login, "class": "img-rounded img-responsive imgsmall")
-            }}
+            {% if dialog[1] %}
+            {{ image("userinfo\getavatar?login=" ~ dialog[1][0].login, "class": "img-rounded img-responsive imgsmall")}}
+            {% else %}
+            {{ image("userinfo\getavatar?login=" ~ "-1", "class": "img-rounded img-responsive imgsmall")}}
+            {% endif %}
         </a>
     </div>
     <div class="col-lg-4">
@@ -15,6 +18,7 @@
         {% if dialog[2] %}
         <small class="text-muted" style="margin-left: 1em">Новые сообщения</small>
         {% endif %}
+
 
         {% for user in dialog[1] %}
         <div class="text-muted">
@@ -32,4 +36,9 @@
 </div>
 {% endfor %}
 
+{% else %}
+
+<h4>
+    <small>У вас нет диалогов :(</small>
+</h4>
 {% endif %}

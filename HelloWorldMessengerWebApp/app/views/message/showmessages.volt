@@ -47,7 +47,7 @@
 </div>
 
 <div id="messages_container" class="panel panel-default"
-     style="background-color: #f5f5f5; padding: 1em; max-height: 350px; overflow-y: scroll">
+     style="background-color: #f5f5f5; padding: 1em; height: 350px; overflow-y: scroll">
     {{ partial("message/partial") }}
 </div>
 

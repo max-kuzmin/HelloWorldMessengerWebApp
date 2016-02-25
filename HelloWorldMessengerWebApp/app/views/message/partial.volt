@@ -22,7 +22,7 @@
 
             <div style="margin: 0.5em">
                 {% if images[message['message_id']] == true %}
-                <a href="{{url.get(" message/showimage?messageid="~message['message_id'])}}">
+                <a href="{{url.get("message/showimage?messageid="~message['message_id'])}}" target="_blank">
                 {{ image("message/showimage?messageid="~message['message_id'], "class": "img-rounded img-responsive
                 imgsmall") }}
                 </a>
