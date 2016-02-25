@@ -185,6 +185,7 @@ class MessageController extends ControllerBase
 
         }
 
+
         $this->flash->error($this->t->_("wrongQuery"));
         return $this->response->redirect("index");
     }

@@ -64,6 +64,6 @@ $countries = array(
 );
 
 $genders = array(
-    "Муж",
-    "Жен"
+    "Жен",
+    "Муж"
 );

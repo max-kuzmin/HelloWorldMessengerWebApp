@@ -97,10 +97,11 @@ class AccountController extends ControllerBase
             $user->token = md5(rand() . rand() . rand());
 
             if ($user->save()) {
+                $this->flash->success($this->t->_("regComplete"));
 
                 if ($this->SendEmailWithToken($user->email, $user->token, $this->t->_("regEmail"))) {
 
-                    $this->flash->success($this->t->_("regComplete"));
+
                     return $this->response->redirect("index");
                 }
 

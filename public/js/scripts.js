@@ -124,14 +124,16 @@ $(document).ready(function () {
 
     $("#sendmessage").submit(postmessage);
 
-    checkNewDialogs();
 
-    checkNewFriends();
+    if ($("#messages_container")[0])
+        setInterval(loadLastMessages, 5000);
 
-    setInterval(loadLastMessages, 5000);
-
-    setInterval(checkNewDialogs, 5000);
-    setInterval(checkNewFriends, 5000);
+    if ($("#newdialogs")[0]) {
+        checkNewDialogs();
+        checkNewFriends();
+        setInterval(checkNewDialogs, 5000);
+        setInterval(checkNewFriends, 5000);
+    }
 });
 
 

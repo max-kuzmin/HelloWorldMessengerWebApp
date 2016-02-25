@@ -23,4 +23,9 @@
 </div>
 {% endfor %}
 
+{% else %}
+
+<h4>
+    <small>У вас нет друзей :(</small>
+</h4>
 {% endif %}

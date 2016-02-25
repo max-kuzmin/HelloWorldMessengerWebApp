@@ -27,12 +27,12 @@
 
     <div class="form-group">
         <label for="gender">Ваш пол:</label>
-        {{ select_static("gender", this.genders, "class" : "form-control") }}
+        {{ select_static("gender", this.genders, "class" : "form-control", "value" : 0) }}
     </div>
 
     <div class="form-group" style="margin-bottom: 2em">
         <label for="country">Страна:</label>
-        {{ select_static("country", this.countries, "class" : "form-control") }}
+        {{ select_static("country", this.countries, "class" : "form-control", "value" : 0) }}
     </div>
 
     {{ submit_button("Зарегистрировать", "class" : "btn btn-primary") }}
