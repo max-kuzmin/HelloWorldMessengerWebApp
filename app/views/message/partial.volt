@@ -7,7 +7,7 @@
 
     <div class="text-muted small row">
         <div class="col-lg-8">
-            <a href="{{url.get(" userinfo/showinfo?login="~message['login'])}}" class="text-muted">
+            <a href="{{url.get("userinfo/showinfo?login="~message['login'])}}" class="text-muted">
             {{ names[message['login']] ~ ":" }}
             </a>
         </div>

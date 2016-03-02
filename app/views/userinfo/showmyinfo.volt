@@ -19,5 +19,5 @@
 </div>
 
 <div class="col-lg-12 text-center" style="margin-top: 2em">
-    {{ link_to("userinfo\editinfo?login=" ~ user.login, "Редактировать", "class" : "btn btn-default") }}
+    {{ link_to("userinfo/editinfo?login=" ~ user.login, "Редактировать", "class" : "btn btn-default") }}
 </div>

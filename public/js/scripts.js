@@ -1,4 +1,5 @@
 var _path = "/HelloWorldMessengerWebApp/";
+var flag = true;
 
 //валидация пароля
 var passCheck = function () {
@@ -69,14 +70,19 @@ var loadPrevMessages = function () {
 //загркзка последних сообщений
 var loadLastMessages = function () {
 
-    time = $("#messages_container").children().last().children().last().val();
+    if (flag) {
+        flag = false;
+        time = $("#messages_container").children().last().children().last().val();
 
-    $.get(_path + "message/showlastmessages?dialogid=" + $("#dialogid").val() + "&time=" + time, function (data) {
-        $("#messages_container").append(data);
+        $.get(_path + "message/showlastmessages?dialogid=" + $("#dialogid").val() + "&time=" + time, function (data) {
+            $("#messages_container").append(data);
 
-        if (data != "") $("#messages_container").scrollTop($("#messages_container")[0].scrollHeight);
+            if (data != "") $("#messages_container").scrollTop($("#messages_container")[0].scrollHeight);
 
-    });
+            flag = true;
+
+        });
+    }
 
 };
 
@@ -104,11 +110,13 @@ var postmessage = function (e) {
         processData: false
     });
 
+    e.preventDefault();
     return false;
 };
 
 
 $(document).ready(function () {
+
 
     $(".alert").append(
         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
@@ -126,6 +134,7 @@ $(document).ready(function () {
 
 
     if ($("#messages_container")[0])
+        $("#messages_container").scrollTop($("#messages_container")[0].scrollHeight);
         setInterval(loadLastMessages, 5000);
 
     if ($("#newdialogs")[0]) {
