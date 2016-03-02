@@ -5,7 +5,7 @@
     <button onclick="loadPrevMessages()" class="btn btn-default btn-xs" id="loadmore" style="margin-right: 1em;">
         Загрузить предыдущие сообшения
     </button>
-    {{ link_to("dialog\removedialog?dialogid="~dialog.dialog_id, "Удалить диалог", "class" : "btn btn-default btn-xs")
+    {{ link_to("dialog/removedialog?dialogid="~dialog.dialog_id, "Удалить диалог", "class" : "btn btn-default btn-xs")
     }}
     <button class="btn btn-default btn-xs" style="margin-left: 1em" onclick="$('#editname').show()">
         Переименовать диалог
@@ -22,7 +22,7 @@
         <button type="button" class="close" onclick="$('#editname').hide()">
             <span aria-hidden="true">&times;</span>
         </button>
-        <form class="form-inline" method="get" action="{{ url.get('dialog\renamedialog') }}">
+        <form class="form-inline" method="get" action="{{ url.get('dialog/renamedialog') }}">
             <input type="text" name="name" class="form-control" placeholder="Введите новое название">
             {{ hidden_field("dialogid", "value": dialog.dialog_id) }}
             <input type="submit" class="form-control" value="Переименовать">
@@ -38,7 +38,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
 
-        <form class="form-inline" method="get" action="{{ url.get('dialog\addusertodialog') }}">
+        <form class="form-inline" method="get" action="{{ url.get('dialog/addusertodialog') }}">
             <input type="text" name="login" class="form-control" placeholder="Введите логин">
             {{ hidden_field("dialogid", "value": dialog.dialog_id) }}
             <input type="submit" class="form-control" value="Добавить в диалог">

@@ -5,12 +5,12 @@
 
 <div class="row {% if not friend[1] %} bg-warning {% endif %}" style="margin-top: 1em">
     <div class="col-lg-1">
-        <a href="{{ url.get('userinfo\showinfo?login='~friend[0].login) }}">
-            {{ image("userinfo\getavatar?login=" ~ friend[0].login, "class": "img-rounded img-responsive imgsmall") }}
+        <a href="{{ url.get('userinfo/showinfo?login='~friend[0].login) }}">
+            {{ image("userinfo/getavatar?login=" ~ friend[0].login, "class": "img-rounded img-responsive imgsmall") }}
         </a>
     </div>
     <div class="col-lg-8">
-        {{ link_to("userinfo\showinfo?login="~friend[0].login, friend[0].name) }}
+        {{ link_to("userinfo/showinfo?login="~friend[0].login, friend[0].name) }}
         {% if not friend[1] %}
         <h5 style="child-align: middle">
             <small>Пользователь добавил вас в друзья</small>

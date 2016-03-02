@@ -123,6 +123,9 @@ class AccountController extends ControllerBase
         if ($this->cookies->has("HWM"))
             $this->cookies->get("HWM")->delete();
 
+        if ($this->cookies->has("PHPSESSID"))
+            $this->cookies->get("PHPSESSID")->delete();
+
         return $this->response->redirect("index");
     }
 
