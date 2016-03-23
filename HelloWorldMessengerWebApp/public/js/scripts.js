@@ -53,6 +53,7 @@ var loadSearchUsers = function () {
 
     $.get(_path + "search/searchusers?query=" + query + "&partial=1&page=" + page, function (data) {
         $("#users_container").append(data);
+        if (data.length == 0) $("#search_more").hide();
     });
 
 };

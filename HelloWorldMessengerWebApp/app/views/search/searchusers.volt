@@ -13,7 +13,7 @@
 </div>
 
 {% if users %}
-<input type="button" class="btn btn-default" value="Показать ещё" style="margin-top: 2em" onclick="loadSearchUsers()">
+<input type="button" id="search_more" class="btn btn-default" value="Показать ещё" style="margin-top: 2em" onclick="loadSearchUsers()">
 
 {% else %}
 

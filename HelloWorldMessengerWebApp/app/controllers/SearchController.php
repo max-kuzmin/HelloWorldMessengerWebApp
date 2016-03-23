@@ -9,7 +9,7 @@ class SearchController extends ControllerBase
     public function searchusersAction()
     {
 
-        if (strlen($this->request->get("query")) >= 1 && strlen($this->request->get("query")) <= 50) {
+        if (strlen($this->request->get("query")) >= 0 && strlen($this->request->get("query")) <= 50) {
 
             $users = User::find(
                 array(
