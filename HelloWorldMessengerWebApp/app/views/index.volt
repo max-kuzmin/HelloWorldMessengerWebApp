@@ -11,7 +11,7 @@
 <div class="container">
 
     <div class="row navbar navbar-default">
-        <div class="col-lg-8">
+        <div class="col-lg-8 col-xs-12">
             <h2>HelloWorld Messenger</h2>
         </div>
         <div class="col-lg-4" style="margin-top: 1em">
@@ -24,18 +24,19 @@
             </div>
             {% else %}
             <div class="row">
-                <div class="col-lg-2 col-lg-offset-3">
+                <div class="col-lg-2 col-lg-offset-3 col-xs-2 col-sm-1">
                     {{ image("userinfo/getavatar?login=" ~ session.get("auth")["login"], "class": "img-rounded
                     img-responsive" ) }}
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 col-xs-3">
                     <h5>{{ session.get("auth")["login"]}}</h5>
                 </div>
-                <div class="col-lg-4" style="margin-top: 0.25em">
+                <div class="col-lg-4 col-xs-3" style="margin-top: 0.25em">
                     {{ link_to("account/logout", "Выход", "class" : "btn btn-default btn-sm") }}
                 </div>
             </div>
             {% endif %}
+            <div class="col-lg-0 col-xs-12" style="padding-bottom: 0.5em"></div>
         </div>
     </div>
     <div class="row">
